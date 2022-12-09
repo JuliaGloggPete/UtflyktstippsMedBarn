@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "267722404374",
+    "project_id": "norraskanefamiljeutflyktsapp",
+    "storage_bucket": "norraskanefamiljeutflyktsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267722404374:android:a9029b5af5b1dc102f7b37",
+        "android_client_info": {
+          "package_name": "com.example.norraskanefamiljeutflyktsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267722404374-rf7e987he8mf6lr29o8actnu4bha96vt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPvqt0UsybQt0ROSSnyAiyYcU-iDoBC8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267722404374-rf7e987he8mf6lr29o8actnu4bha96vt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

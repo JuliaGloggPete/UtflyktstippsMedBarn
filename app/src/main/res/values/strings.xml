@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">NorraSkaneFamiljeUtflyktsapp</string>
+    <string name="title_activity_all_destinations_maps">AllDestinationsMapsActivity</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="duration_array">
+        <item>ej angiven</item>
+        <item>ca 30 min</item>
+        <item>1-2 timmar</item>
+        <item>halvdagsutflykt</item>
+        <item>heldagsutflykt</item>
+        <item>heldagsutflykt med övernattningsmöjlighet</item>
+
+
+
+
+    </string-array>
+
+
+
+
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <string-array name="age_array">
+            <item>alla ålder</item>
+            <item>från 1</item>
+            <item>från 2</item>
+            <item>från 3</item>
+            <item>från 4</item>
+            <item>från 5</item>
+            <item>från 6</item>
+            <item>från 7</item>
+            <item>från 8</item>
+            <item>från 9</item>
+            <item>äldre</item>
+
+
+
+
+        </string-array>
+
+</resources>

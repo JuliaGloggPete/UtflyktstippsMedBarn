@@ -12,6 +12,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="1dp"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +45,36 @@
                 android:minHeight="48dp" />
 
             <TextView
+                android:id="@+id/tv_Adress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Adress" />
+
+            <EditText
+                android:id="@+id/et_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Gata"
+                android:inputType="textPostalAddress"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/et_postalCodeNCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="123 456 Exempelstad"
+                android:inputType="textPostalAddress"
+                android:minHeight="48dp" />
+
+            <TextView
                 android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,7 +90,7 @@
                 android:layout_marginTop="16dp"
                 android:ems="10"
                 android:hint="t.ex. bra badplats eller vad ni gjorde här"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine|textPersonName|textImeMultiLine"
                 android:minHeight="48dp" />
 
             <TextView
@@ -160,6 +191,14 @@
                 android:layout_marginTop="16dp"
                 android:text="Barnvangvänlig" />
 
+            <CheckBox
+                android:id="@+id/checkB_indoor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Inomhus/under tak" />
+
             <TextView
                 android:id="@+id/tv_duration"
                 android:layout_width="match_parent"
@@ -170,7 +209,7 @@
 
             <Spinner
                 android:id="@+id/spinner_duration"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
@@ -178,7 +217,7 @@
 
             <TextView
                 android:id="@+id/tv_price"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
@@ -186,14 +225,33 @@
 
             <EditText
                 android:id="@+id/et_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="t.ex. se www.exempel.se / eller vuxna från 100kr"
+                android:inputType="textMultiLine|textPersonName|textImeMultiLine"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/tv_OpenHours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Öppettider" />
+
+            <EditText
+                android:id="@+id/et_OpenHours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:ems="10"
-                android:hint="t.ex. se www.exempel.se / eller vuxna från 100kr"
-                android:inputType="textPersonName"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp" />
+                android:hint="fre-sön, 10-18 eller se mer på www.exempelutflykt.se"
+                android:inputType="textMultiLine|textPersonName|textImeMultiLine"
+                android:minHeight="48dp" />
 
             <Button
                 android:id="@+id/btn_add"

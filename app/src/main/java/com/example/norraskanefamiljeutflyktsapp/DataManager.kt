@@ -1,10 +1,18 @@
 package com.example.norraskanefamiljeutflyktsapp
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
-class DataManager {
+object DataManager {
 
     val destinations = mutableListOf<Places>()
+    val db = Firebase.firestore
+
+    init {
+        createBaseData()
+
+    }
 
 
     fun createBaseData(){

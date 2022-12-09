@@ -1,7 +1,6 @@
 package com.example.norraskanefamiljeutflyktsapp
 
 import com.google.android.gms.maps.model.LatLng
-import java.time.Duration
 
 
 data class Places(
@@ -10,7 +9,7 @@ data class Places(
     var PostalCodeNVillage: String? = null,
     var homepage: String? = null,
 
-    var description : String?= null,
+    var description : String? =null,
     var latlang :LatLng? =null,
 
     var restaurant : Boolean = false,
@@ -28,5 +27,5 @@ data class Places(
 
     var pris: String? = null,
     var öppetider: String? = null,
-    var produkImage: Int,
+    var destinationImage: Int,
     )

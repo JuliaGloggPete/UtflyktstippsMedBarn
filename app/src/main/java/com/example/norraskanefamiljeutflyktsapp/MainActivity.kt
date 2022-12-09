@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun gotoPlacesActivitiy() {
-        val intent = Intent(this, AllDestinationsMapsActivity ::class.java)
+        val intent = Intent(this, DestinationsViewActivity ::class.java)
         startActivity(intent)
 
     }

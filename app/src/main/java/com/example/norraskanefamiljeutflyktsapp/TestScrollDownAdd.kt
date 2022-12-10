@@ -2,11 +2,8 @@ package com.example.norraskanefamiljeutflyktsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
+import android.view.View
+import android.widget.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -19,7 +16,7 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var streetEditText : EditText
     lateinit var postalCodeNCityEditText : EditText
     lateinit var descriptionEditText : EditText
-    lateinit var ageRecommendaiton : Spinner
+    lateinit var ageRecommendaiton : String
     lateinit var checkBoxOnPlace: CheckBox
     lateinit var latLng: LatLng //!!!!
     lateinit var checkBoxRestaurant: CheckBox
@@ -30,7 +27,7 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var checkBoxShop: CheckBox
     lateinit var checkBoxStrolerAccess: CheckBox
     lateinit var checkBoxHandicapAccess: CheckBox
-    lateinit var durationOfActivity : Spinner
+    lateinit var durationOfActivity : String
     lateinit var priceEditText: EditText
     lateinit var openHoursEditText : EditText
     lateinit var homepageEditText :EditText
@@ -48,7 +45,7 @@ class TestScrollDownAdd : AppCompatActivity() {
         postalCodeNCityEditText = findViewById(R.id.et_postalCodeNCity)
         homepageEditText = findViewById(R.id.et_Homepage)
         descriptionEditText = findViewById(R.id.et_descritption)
-        ageRecommendaiton = findViewById<Spinner>(R.id.spinner_age)
+        //ageRecommendaiton = findViewById<Spinner>(R.id.spinner_age)
         checkBoxOnPlace = findViewById<CheckBox>(R.id.checkBox_onPlace)
         checkBoxRestaurant = findViewById<CheckBox>(R.id.checkB_Rest_Bistro)
         checkBoxPlayground  = findViewById<CheckBox>(R.id.checkB_playgr)
@@ -58,7 +55,7 @@ class TestScrollDownAdd : AppCompatActivity() {
         checkBoxShop = findViewById<CheckBox>(R.id.checkB_store)
         checkBoxStrolerAccess = findViewById<CheckBox>(R.id.checkB_strollerAcces)
         checkBoxHandicapAccess = findViewById<CheckBox>(R.id.checkB_handicapAcces)
-        durationOfActivity = findViewById<Spinner>(R.id.spinner_duration)
+        //durationOfActivity = findViewById<Spinner>(R.id.spinner_duration)
         priceEditText = findViewById(R.id.et_price)
         openHoursEditText = findViewById(R.id.et_OpenHours)
 
@@ -68,35 +65,58 @@ class TestScrollDownAdd : AppCompatActivity() {
            saveDestination()
         }
 
+        val duration = arrayOf(
+        "ej angiven",
+        "ca 30 min", "1-2 timmar","halvdagsutflykt",
+        "heldagsutflykt", "heldagsutflykt med övernattningsmöjlighet"
+        )
 
+        val durationsoinner = findViewById<Spinner>(R.id.spinner_duration)
 
+        val durationArrayAdapter = ArrayAdapter<String>(
+            this, android.R.layout.simple_spinner_item,duration
+        )
+        durationsoinner.adapter =durationArrayAdapter
+        durationsoinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                durationOfActivity = duration[position]
+                Toast.makeText(applicationContext,"selected duration"+ duration[position],Toast.LENGTH_SHORT).show()
+            }
 
-
-
-
-
-
-
-        val spinner: Spinner = findViewById(R.id.spinner_age)
-// Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(
-            this,
-
-            R.array.age_array,
-            android.R.layout.simple_spinner_item
-        ).also { spinnerAdapter ->
-            // Specify the layout to use when the list of choices appears
-            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinner.adapter = spinnerAdapter
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
         }
 
-        // Key classes are the following:
+        val ageRec = arrayOf(
+        "alla ålder", "från 1", "från 2", "från 3", "från 4", "från 5",
+      "från 6", "från 7", "från 8", "från 9")
 
-        //Spinner
-        // SpinnerAdapter
-        //AdapterView.OnItemSelectedListener
-        // https://developer.android.com/develop/ui/views/components/spinner
+        val agespinner= findViewById<Spinner>(R.id.spinner_age)
+       val ageArrayAdapter = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item,
+           ageRec)
+           agespinner.adapter =ageArrayAdapter
+        agespinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                ageRecommendaiton = ageRec[position]
+              // Toast.makeText(applicationContext,"selected age"+ ageRec[position],Toast.LENGTH_SHORT).show()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
 
 
     }
@@ -158,8 +178,8 @@ class TestScrollDownAdd : AppCompatActivity() {
 
 
 
-        var duration = durationOfActivity.scrollX.toString()
-        var ageFrom = ageRecommendaiton.scrollX.toString()
+        var duration = durationOfActivity
+        var ageFrom = ageRecommendaiton
 
         var price = priceEditText.text.toString()
         var openinghours= openHoursEditText.text.toString()
@@ -171,12 +191,11 @@ class TestScrollDownAdd : AppCompatActivity() {
             postalCodeNVillage,homepage,
         description,latlang,restaurant,playgroundNearby,
             bbqplace,animalstosee,shop,
-            accesDisability,accesStroller,indoor,false,duration,ageFrom,price,openinghours,destinationImage
+            accesDisability,accesStroller,indoor,false,
+            duration,ageFrom,price,openinghours,destinationImage
         )
      DataManager.destinations.add(destination)
      finish()
-
-     //glöm inte ta bort de svenska texter
 
 
 

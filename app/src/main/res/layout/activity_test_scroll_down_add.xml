@@ -75,6 +75,25 @@
                 android:minHeight="48dp" />
 
             <TextView
+                android:id="@+id/tv_homepage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Webbplats" />
+
+            <EditText
+                android:id="@+id/et_Homepage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="www.exempel.se"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+
+            <TextView
                 android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -213,7 +232,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:entries="@array/duration_array" />
+                android:entries="@array/duration_array"
+                android:minHeight="48dp" />
 
             <TextView
                 android:id="@+id/tv_price"
@@ -258,7 +278,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="38dp"
+                android:layout_marginTop="24dp"
                 android:text="Add" />
 
         </LinearLayout>

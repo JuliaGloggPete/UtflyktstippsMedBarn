@@ -3,6 +3,7 @@ package com.example.norraskanefamiljeutflyktsapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Spinner
@@ -14,10 +15,10 @@ import com.google.firebase.ktx.Firebase
 class TestScrollDownAdd : AppCompatActivity() {
 
     lateinit var db : FirebaseFirestore
-    lateinit var title : EditText
-    lateinit var street : EditText
-    lateinit var postalCodeNCity : EditText
-    lateinit var description : EditText
+    lateinit var titleEditText : EditText
+    lateinit var streetEditText : EditText
+    lateinit var postalCodeNCityEditText : EditText
+    lateinit var descriptionEditText : EditText
     lateinit var ageRecommendaiton : Spinner
     lateinit var checkBoxOnPlace: CheckBox
     lateinit var latLng: LatLng //!!!!
@@ -30,8 +31,9 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var checkBoxStrolerAccess: CheckBox
     lateinit var checkBoxHandicapAccess: CheckBox
     lateinit var durationOfActivity : Spinner
-    lateinit var price : EditText
-    lateinit var openHours : EditText
+    lateinit var priceEditText: EditText
+    lateinit var openHoursEditText : EditText
+    lateinit var homepageEditText :EditText
 
 
 
@@ -41,10 +43,11 @@ class TestScrollDownAdd : AppCompatActivity() {
 
         db = Firebase.firestore
 
-        title = findViewById(R.id.et_title)
-        street = findViewById(R.id.et_street)
-        postalCodeNCity = findViewById(R.id.et_postalCodeNCity)
-        description = findViewById(R.id.et_descritption)
+        titleEditText = findViewById(R.id.et_title)
+        streetEditText = findViewById(R.id.et_street)
+        postalCodeNCityEditText = findViewById(R.id.et_postalCodeNCity)
+        homepageEditText = findViewById(R.id.et_Homepage)
+        descriptionEditText = findViewById(R.id.et_descritption)
         ageRecommendaiton = findViewById<Spinner>(R.id.spinner_age)
         checkBoxOnPlace = findViewById<CheckBox>(R.id.checkBox_onPlace)
         checkBoxRestaurant = findViewById<CheckBox>(R.id.checkB_Rest_Bistro)
@@ -56,8 +59,15 @@ class TestScrollDownAdd : AppCompatActivity() {
         checkBoxStrolerAccess = findViewById<CheckBox>(R.id.checkB_strollerAcces)
         checkBoxHandicapAccess = findViewById<CheckBox>(R.id.checkB_handicapAcces)
         durationOfActivity = findViewById<Spinner>(R.id.spinner_duration)
-        price = findViewById(R.id.et_price)
-        openHours = findViewById(R.id.et_OpenHours)
+        priceEditText = findViewById(R.id.et_price)
+        openHoursEditText = findViewById(R.id.et_OpenHours)
+
+        val addButton = findViewById<Button>(R.id.btn_add)
+
+        addButton.setOnClickListener {
+           saveDestination()
+        }
+
 
 
 
@@ -71,13 +81,14 @@ class TestScrollDownAdd : AppCompatActivity() {
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
             this,
+
             R.array.age_array,
             android.R.layout.simple_spinner_item
-        ).also { adapter ->
+        ).also { spinnerAdapter ->
             // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
-            spinner.adapter = adapter
+            spinner.adapter = spinnerAdapter
         }
 
         // Key classes are the following:
@@ -90,8 +101,83 @@ class TestScrollDownAdd : AppCompatActivity() {
 
     }
 
-    fun saveDestination(){
-        //val destination =
+ fun saveDestination(){
+        var title  = titleEditText.text.toString()
+        var adressStreetName = streetEditText.text.toString()
+        var postalCodeNVillage= postalCodeNCityEditText.text.toString()
+        var homepage = homepageEditText.text.toString()
+
+        var description = descriptionEditText.text.toString()
+        var latlang = LatLng(40.8,40.9)
+     var restaurant  = false
+     var accesDisability = false
+
+     if (checkBoxHandicapAccess.isChecked){
+          accesDisability = true
+     }
+
+     if (checkBoxRestaurant.isChecked){
+          restaurant  = true
+     }
+
+     var  bbqplace = false
+
+     if (checkBoxBBQPlace.isChecked){
+         bbqplace = true
+
+     }
+     var shop = false
+     if (checkBoxShop.isChecked){
+         shop = true
+
+     }
+
+     var playgroundNearby =false
+     if(checkBoxPlayground.isChecked){
+          playgroundNearby = true
+    }
+     var animalstosee = false
+
+     if (checkBoxAnimalsToSee.isChecked){
+
+      animalstosee = true
+     }
+     var accesStroller = false
+     if (checkBoxStrolerAccess.isChecked){
+
+        accesStroller = true
+     }
+     var indoor = false
+     if (checkBoxIndoor.isChecked){
+
+         indoor = true
+     }
+
+            var extraPlaceholder = false
+
+
+
+
+        var duration = durationOfActivity.scrollX.toString()
+        var ageFrom = ageRecommendaiton.scrollX.toString()
+
+        var price = priceEditText.text.toString()
+        var openinghours= openHoursEditText.text.toString()
+        var destinationImage = R.drawable.example_picture
+
+
+
+        val destination = Places(title,adressStreetName,
+            postalCodeNVillage,homepage,
+        description,latlang,restaurant,playgroundNearby,
+            bbqplace,animalstosee,shop,
+            accesDisability,accesStroller,indoor,false,duration,ageFrom,price,openinghours,destinationImage
+        )
+     DataManager.destinations.add(destination)
+     finish()
+
+     //glöm inte ta bort de svenska texter
+
 
 
     }

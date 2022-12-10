@@ -1,9 +1,11 @@
 package com.example.norraskanefamiljeutflyktsapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class DestinationsViewActivity : AppCompatActivity() {
 
@@ -17,8 +19,21 @@ class DestinationsViewActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = DestinatinRecyclerAdapter(this, DataManager.destinations )
+        val addDestinationButton = findViewById<FloatingActionButton>(R.id.floatingActionButton2)
+        addDestinationButton.setOnClickListener{
+            val intent = Intent (this, TestScrollDownAdd::class.java)
+            startActivity(intent)
+
+        }
 
 
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        recyclerView.adapter?.notifyDataSetChanged()
+
+    }
+
 }

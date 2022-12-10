@@ -27,6 +27,12 @@ class DestinatinRecyclerAdapter (val context: Context,
         holder.titleTextView.text = destination.title
         holder.descriptionTextView.text = destination.description
         holder.destinationImage.setImageResource(destination.destinationImage)
+        holder.ageRecomendatin.text =destination.ageFrom
+        if (destination.restaurant == true){
+            holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_24)
+        }
+
+
     }
 
     override fun getItemCount()= destinations.size
@@ -36,7 +42,10 @@ class DestinatinRecyclerAdapter (val context: Context,
         val titleTextView = destinationView.findViewById<TextView>(R.id.tv_titleRecyclerview)
         val descriptionTextView = destinationView.findViewById<TextView>(R.id.tv_ShortTextdescr)
         val destinationImage = destinationView.findViewById<ImageView>(R.id.imageView)
+        val restaurantImage = destinationView.findViewById<ImageView>(R.id.iv_restaurant)
+        val ageRecomendatin = destinationView.findViewById<TextView>(R.id.txtv_rclv_agerec)
         val moreButton = destinationView.findViewById<Button>(R.id.button)
+
 
 
     }

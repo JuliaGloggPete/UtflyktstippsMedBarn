@@ -9,7 +9,7 @@ object DataManager {
     val destinations = mutableListOf<Places>()
 
 
-    init {
+    /*init {
         createBaseData()
 
     }
@@ -55,7 +55,7 @@ object DataManager {
 
 
 
-    }
+    }*/
 
 
 }

@@ -26,7 +26,7 @@ class DestinatinRecyclerAdapter (val context: Context,
    val destination = destinations[position]
         holder.titleTextView.text = destination.title
         holder.descriptionTextView.text = destination.description
-        holder.destinationImage.setImageResource(destination.destinationImage)
+        destination.destinationImage?.let { holder.destinationImage.setImageResource(it) }
         holder.ageRecomendatin.text =destination.ageFrom
         if (destination.restaurant == true){
             holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_24)
@@ -42,7 +42,7 @@ class DestinatinRecyclerAdapter (val context: Context,
         val titleTextView = destinationView.findViewById<TextView>(R.id.tv_titleRecyclerview)
         val descriptionTextView = destinationView.findViewById<TextView>(R.id.tv_ShortTextdescr)
         val destinationImage = destinationView.findViewById<ImageView>(R.id.imageView)
-        val restaurantImage = destinationView.findViewById<ImageView>(R.id.iv_restaurant)
+        val restaurantImage = destinationView.findViewById<ImageView>(R.id.iv_attribute4)
         val ageRecomendatin = destinationView.findViewById<TextView>(R.id.txtv_rclv_agerec)
         val moreButton = destinationView.findViewById<Button>(R.id.button)
 

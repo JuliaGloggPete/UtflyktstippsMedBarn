@@ -29,8 +29,8 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="54dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="88dp"
         android:text="Button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ShortTextdescr" />
@@ -38,9 +38,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="160dp"
-        android:layout_height="180dp"
+        android:layout_height="160dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -49,19 +49,89 @@
         android:id="@+id/txtv_rclv_agerec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button" />
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageView
-        android:id="@+id/iv_restaurant"
-        android:layout_width="57dp"
-        android:layout_height="47dp"
+        android:id="@+id/iv_attribute4"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/iv_attribute3"
         app:layout_constraintTop_toBottomOf="@+id/tv_ShortTextdescr"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/iv_attribute3"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_attribute2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ShortTextdescr"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/iv_attribute2"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_attribute1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ShortTextdescr"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/iv_attribute6"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_attribute1"
+        app:layout_constraintTop_toBottomOf="@+id/iv_attribute2"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/iv_attribute7"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_attribute6"
+        app:layout_constraintTop_toBottomOf="@+id/iv_attribute2"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/iv_attribute8"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_attribute7"
+        app:layout_constraintTop_toBottomOf="@+id/iv_attribute2"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/iv_attribute1"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ShortTextdescr"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/iv_attribute5"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_attribute1"
         tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

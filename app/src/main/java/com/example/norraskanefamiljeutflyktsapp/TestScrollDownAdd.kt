@@ -128,7 +128,9 @@ class TestScrollDownAdd : AppCompatActivity() {
         var homepage = homepageEditText.text.toString()
 
         var description = descriptionEditText.text.toString()
-        var latlang = LatLng(40.8,40.9)
+        var latitude =40.8
+     var longitude = 40.9
+
      var restaurant  = false
      var accesDisability = false
 
@@ -189,7 +191,9 @@ class TestScrollDownAdd : AppCompatActivity() {
 
         val destination = Places(title,adressStreetName,
             postalCodeNVillage,homepage,
-        description,latlang,restaurant,playgroundNearby,
+        description,
+            latitude,longitude,
+            restaurant,playgroundNearby,
             bbqplace,animalstosee,shop,
             accesDisability,accesStroller,indoor,false,
             duration,ageFrom,price,openinghours,destinationImage

@@ -1,13 +1,17 @@
 package com.example.norraskanefamiljeutflyktsapp
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.startActivity
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -20,12 +24,40 @@ class MainActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     lateinit var emailView: EditText
     lateinit var passwordView: EditText
+    lateinit var locationPovider: FusedLocationProviderClient
+    lateinit var locationRequest: LocationRequest
+    lateinit var locationCallback: LocationCallback
+    private val REQUEST_LOCATION = 1
 
-   // val placesList = mutableListOf<Places>()
+    // val placesList = mutableListOf<Places>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        locationPovider = LocationServices.getFusedLocationProviderClient(this)
+        locationRequest = LocationRequest.Builder(2000).build()
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationsResult: LocationResult) {
+                for (location in locationsResult.locations) {
+                    Log.d("PPÖ", "lat: ${location.latitude}," +
+                            " lng ${location.longitude}")
+                }
+
+            }
+
+        }
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION
+
+                )
+
+
+        }
 
         auth = Firebase.auth
 
@@ -44,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                     val item = document.toObject<Places>()
                     if (item != null) {
                         DataManager.destinations.add(item)
-                       // placesList.add(item)
+                        // placesList.add(item)
                     }
 
 
@@ -182,7 +214,34 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    fun startLocationUpdates(){
+        if( ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION)==
+                PackageManager.PERMISSION_GRANTED)
+        locationPovider.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
 
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode === REQUEST_LOCATION){
+
+            if (grantResults.isEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            {
+                startLocationUpdates()
+
+
+            }
+
+
+
+        }
+    }
+
 
 }

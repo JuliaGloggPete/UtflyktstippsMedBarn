@@ -3,6 +3,7 @@ package com.example.norraskanefamiljeutflyktsapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,6 +28,15 @@ class DestinationsViewActivity : AppCompatActivity() {
 
             val intent = Intent (this, TestScrollDownAdd::class.java)
             startActivity(intent)
+
+        }
+
+        val mapBtn = findViewById<Button>(R.id.btn_seeMap)
+        mapBtn.setOnClickListener {
+
+            val intent = Intent (this, AllDestinationsMapsActivity :: class.java)
+            startActivity(intent)
+
 
         }
 

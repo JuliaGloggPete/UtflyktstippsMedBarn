@@ -2,6 +2,7 @@ package com.example.norraskanefamiljeutflyktsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.norraskanefamiljeutflyktsapp.DataManager.destinations
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -40,9 +41,46 @@ class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        createMarkers()
+
+
+
+
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
+      /*  val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
     }
+
+    fun createMarkers(){
+
+        for (destination in destinations)          {
+
+
+            if (destination.latitude != null && destination.longitude != null){
+
+
+        var latitude = destination.latitude
+        var  longitude = destination.longitude
+
+        var destinatinon1 = LatLng(latitude!!,longitude!!)
+        var marker = mMap.addMarker(
+            MarkerOptions()
+                .position(destinatinon1)
+                .title(destination.title)
+                .snippet(destination.adressStreetName))
+
+
+        }}
+
+
+
+
+        //for ( destination in DataManager.destinations){
+        //var destination = LatLng(destinations.latitude,destionations.longitude)}
+
+
+
+    }
+
 }

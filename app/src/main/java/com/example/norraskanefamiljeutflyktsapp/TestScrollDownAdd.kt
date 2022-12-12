@@ -198,7 +198,9 @@ class TestScrollDownAdd : AppCompatActivity() {
             accesDisability,accesStroller,indoor,false,
             duration,ageFrom,price,openinghours,destinationImage
         )
-     DataManager.destinations.add(destination)
+     //DataManager.destinations.add(destination)
+
+     db.collection("destinations").add(destination)
      finish()
 
 

@@ -1,10 +1,12 @@
 package com.example.norraskanefamiljeutflyktsapp
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.GeoPoint
 
 
 data class Places(
+
     var title : String? = null,
     var adressStreetName: String? = null,
     var PostalCodeNVillage: String? = null,
@@ -30,4 +32,5 @@ data class Places(
     var pris: String? = null,
     var öppetider: String? = null,
     var destinationImage: Int? = null,
+    @DocumentId var documentId : String? = null,
     )

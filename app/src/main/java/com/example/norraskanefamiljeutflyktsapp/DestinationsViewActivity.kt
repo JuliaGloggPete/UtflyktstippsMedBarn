@@ -21,6 +21,10 @@ class DestinationsViewActivity : AppCompatActivity() {
         recyclerView.adapter = DestinatinRecyclerAdapter(this, DataManager.destinations )
         val addDestinationButton = findViewById<FloatingActionButton>(R.id.floatingActionButton2)
         addDestinationButton.setOnClickListener{
+
+            //if  sign up // sign in = true
+            // skick med över från innan
+
             val intent = Intent (this, TestScrollDownAdd::class.java)
             startActivity(intent)
 

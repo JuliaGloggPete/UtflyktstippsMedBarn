@@ -50,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Adress" />
+                android:text="Adress"
+                android:textColor="#C3C6CA" />
 
             <EditText
                 android:id="@+id/et_street"

@@ -3,6 +3,7 @@ package com.example.norraskanefamiljeutflyktsapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,15 @@ class DestinationsViewActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         recyclerView.adapter?.notifyDataSetChanged()
+
+    }
+
+    fun addMoreFragment (view: View){
+        val moreFragment = MoreInfoFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.container,moreFragment,"more Fragment")
+        transaction.commit()
+
 
     }
 

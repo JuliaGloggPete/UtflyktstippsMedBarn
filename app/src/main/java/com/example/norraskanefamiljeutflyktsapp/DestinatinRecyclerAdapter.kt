@@ -32,8 +32,41 @@ class DestinatinRecyclerAdapter (val context: Context,
             holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_24)
         }
 
+ if (destination.restaurant == true){
+            holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_24)
+        }
+
+ if (destination.accesStroller == true){
+            holder.strolerImage.setImageResource(R.drawable.ic_baseline_child_friendly_24)
+        }
+
+ if (destination.accesDisability == true){
+            holder.wheelChairImage.setImageResource(R.drawable.ic_baseline_accessible_24)
+        }
+
+ if (destination.bbqplace == true){
+            holder.BBQImage.setImageResource(R.drawable.ic_baseline_outdoor_grill_24)
+        }
+
+ if (destination.playgroundNearby == true){
+            holder.playgroundImage.setImageResource(R.drawable.ic_baseline_toys_24)
+        }
+
+ if (destination.animalstosee == true){
+            holder.animalsImage.setImageResource(R.drawable.ic_baseline_pets_24)
+        }
+
+ if (destination.shop == true){
+            holder.shopImage.setImageResource(R.drawable.ic_baseline_shopping_cart_24)
+        }
+if (destination.indoorActivity== true){
+            holder.indoorImage.setImageResource(R.drawable.ic_baseline_home_24)
+        }
+
 
     }
+
+
 
     override fun getItemCount()= destinations.size
 
@@ -42,9 +75,22 @@ class DestinatinRecyclerAdapter (val context: Context,
         val titleTextView = destinationView.findViewById<TextView>(R.id.tv_titleRecyclerview)
         val descriptionTextView = destinationView.findViewById<TextView>(R.id.tv_ShortTextdescr)
         val destinationImage = destinationView.findViewById<ImageView>(R.id.imageView)
-        val restaurantImage = destinationView.findViewById<ImageView>(R.id.iv_attribute4)
+        val restaurantImage = destinationView.findViewById<ImageView>(R.id.iv_attribute1)
+        val strolerImage = destinationView.findViewById<ImageView>(R.id.iv_attribute2)
+        val wheelChairImage = destinationView.findViewById<ImageView>(R.id.iv_attribute3)
+        val BBQImage = destinationView.findViewById<ImageView>(R.id.iv_attribute4)
+        val playgroundImage = destinationView.findViewById<ImageView>(R.id.iv_attribute5)
+        val animalsImage = destinationView.findViewById<ImageView>(R.id.iv_attribute6)
+        val shopImage = destinationView.findViewById<ImageView>(R.id.iv_attribute7)
+        val indoorImage = destinationView.findViewById<ImageView>(R.id.iv_attribute8)
+
+
+
+
+
+
         val ageRecomendatin = destinationView.findViewById<TextView>(R.id.txtv_rclv_agerec)
-        val moreButton = destinationView.findViewById<Button>(R.id.button)
+        val moreButton = destinationView.findViewById<Button>(R.id.btn_more)
 
 
 

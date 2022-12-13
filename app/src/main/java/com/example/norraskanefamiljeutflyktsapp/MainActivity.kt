@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
+import android.os.Looper.getMainLooper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationsResult: LocationResult) {
                 for (location in locationsResult.locations) {
-                    Log.d("PPÖ", "lat: ${location.latitude}," +
+                    Log.d("PPP", "lat: ${location.latitude}," +
                             " lng ${location.longitude}")
                 }
 
@@ -52,11 +53,7 @@ class MainActivity : AppCompatActivity() {
             != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION
-
-                )
-
-
+                REQUEST_LOCATION)
         }
 
         auth = Firebase.auth
@@ -69,20 +66,16 @@ class MainActivity : AppCompatActivity() {
 
         docRef.addSnapshotListener { snapshot, e ->
             if (snapshot != null) {
-                //placesList.clear()
+
                 DataManager.destinations.clear()
 
                 for (document in snapshot.documents) {
                     val item = document.toObject<Places>()
                     if (item != null) {
                         DataManager.destinations.add(item)
-                        // placesList.add(item)
+
                     }
-
-
                 }
-
-
             }
             printPlacesItems()
         }
@@ -100,12 +93,10 @@ class MainActivity : AppCompatActivity() {
 
         signUpBtn.setOnClickListener {
             signUp()
-
         }
 
         signInBtn.setOnClickListener {
             signIn()
-
         }
 
         skipBtn.setOnClickListener {
@@ -216,22 +207,28 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun startLocationUpdates(){
-        if( ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION)==
-                PackageManager.PERMISSION_GRANTED)
-        locationPovider.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+    fun startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED) {
+            locationPovider.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper())
 
+        }
     }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode === REQUEST_LOCATION){
+        if (requestCode == REQUEST_LOCATION){
 
-            if (grantResults.isEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            if (grantResults.isNotEmpty()
+                && grantResults[0]==PackageManager.PERMISSION_GRANTED)
             {
                 startLocationUpdates()
 

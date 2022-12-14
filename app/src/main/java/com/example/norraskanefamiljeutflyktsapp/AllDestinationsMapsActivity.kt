@@ -11,6 +11,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.norraskanefamiljeutflyktsapp.databinding.ActivityAllDestinationsMapsBinding
+import com.google.android.gms.maps.model.LatLngBounds
 
 class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -54,6 +55,8 @@ class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun createMarkers(){
 
+        val boundBuilder = LatLngBounds.builder()
+
         for (destination in destinations)          {
 
 
@@ -64,6 +67,7 @@ class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var  longitude = destination.longitude
 
         var destinatinon1 = LatLng(latitude!!,longitude!!)
+        boundBuilder.include(destinatinon1)
         var marker = mMap.addMarker(
             MarkerOptions()
                 .position(destinatinon1)
@@ -72,6 +76,8 @@ class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         }}
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundBuilder.build(),1000,1000,0))
 
 
 

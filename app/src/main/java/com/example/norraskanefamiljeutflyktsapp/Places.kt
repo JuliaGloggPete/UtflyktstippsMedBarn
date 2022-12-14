@@ -29,8 +29,8 @@ data class Places(
     var duration: String? = null,
     var ageFrom : String? = null,
 
-    var pris: String? = null,
-    var öppetider: String? = null,
+    var pris: String? = null, //!!!!!! svenska
+    var öppetider: String? = null,// svenska
     var destinationImage: Int? = null,
     @DocumentId var documentId : String? = null,
     )

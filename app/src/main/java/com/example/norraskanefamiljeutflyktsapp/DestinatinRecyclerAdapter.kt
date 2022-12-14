@@ -85,7 +85,7 @@ if (destination.indoorActivity== true){
         val shopImage = destinationView.findViewById<ImageView>(R.id.iv_attribute7)
         val indoorImage = destinationView.findViewById<ImageView>(R.id.iv_attribute8)
         val ageRecomendatin = destinationView.findViewById<TextView>(R.id.txtv_rclv_agerec)
-        val moreButton = destinationView.findViewById<Button>(R.id.btn_more)
+
         init {
             itemView.setOnClickListener{
                 val postion = adapterPosition

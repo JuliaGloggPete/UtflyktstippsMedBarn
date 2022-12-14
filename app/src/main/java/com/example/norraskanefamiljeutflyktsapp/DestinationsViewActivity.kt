@@ -52,21 +52,14 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
 
     }
 
-    fun addMoreFragment (view: View){
-        val moreFragment = MoreInfoFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.container,moreFragment,"more Fragment")
-        transaction.commit()
 
-
-    }
 
     override fun OnClick(position: Int) {
       // Toast.makeText(this, "${position}",Toast.LENGTH_SHORT).show()
      //   Toast.makeText(this,DataManager.destinations[position].title,Toast.LENGTH_SHORT).show()
         val intent = Intent(this, MoreInfoActivity ::class.java)
 
-        intent.putExtra("title",DataManager.destinations[position].title.toString())
+        intent.putExtra("id",DataManager.destinations[position].documentId.toString())
         startActivity(intent)
 
 

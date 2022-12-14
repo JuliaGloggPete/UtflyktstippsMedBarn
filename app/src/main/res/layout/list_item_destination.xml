@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/tv_ShortTextdescr"
         android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:layout_height="130dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="16dp"
@@ -27,20 +27,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_titleRecyclerview" />
 
-    <Button
-        android:id="@+id/btn_more"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="Mer Info"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -60,10 +60,12 @@ class TestScrollDownAdd : AppCompatActivity() {
         openHoursEditText = findViewById(R.id.et_OpenHours)
 
         val addButton = findViewById<Button>(R.id.btn_add)
+        val cancelButton = findViewById<Button>(R.id.btn_cancel)
 
         addButton.setOnClickListener {
            saveDestination()
         }
+        cancelButton.setOnClickListener { finish() }
 
         val duration = arrayOf(
         "ej angiven",

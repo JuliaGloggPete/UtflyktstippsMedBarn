@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
     private val REQUEST_LOCATION = 1
+    lateinit var skipBtn : Button
 
     // val placesList = mutableListOf<Places>()
 
@@ -89,7 +90,8 @@ class MainActivity : AppCompatActivity() {
         val signInBtn = findViewById<Button>(R.id.btn_signIn)
         val signUpBtn = findViewById<Button>(R.id.btn_signUp)
 
-        val skipBtn = findViewById<Button>(R.id.btn_moveOnWithoutRegister)
+         skipBtn = findViewById<Button>(R.id.btn_moveOnWithoutRegister)
+
 
         signUpBtn.setOnClickListener {
             signUp()
@@ -100,7 +102,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         skipBtn.setOnClickListener {
+
             gotoPlacesActivitiy()
+
         }
 
 
@@ -117,7 +121,17 @@ class MainActivity : AppCompatActivity() {
 
 
     fun gotoPlacesActivitiy() {
+        var loggedIn = true
+
+
+        if ( skipBtn.isPressed ){
+            loggedIn = false
+
+        }
+
         val intent = Intent(this, DestinationsViewActivity::class.java)
+
+        intent.putExtra("Logged", loggedIn)
         startActivity(intent)
 
     }
@@ -147,6 +161,8 @@ class MainActivity : AppCompatActivity() {
                     )
                 toast.show()
                 gotoPlacesActivitiy()
+
+
 
             } else {
                 val toast =
@@ -189,6 +205,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     )
                 toast.show()
+
                 gotoPlacesActivitiy()
 
             } else {

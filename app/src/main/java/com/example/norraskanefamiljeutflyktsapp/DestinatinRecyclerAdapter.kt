@@ -10,7 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class DestinatinRecyclerAdapter (val context: Context,
-                                 val destinations : List<Places>) : RecyclerView.Adapter<DestinatinRecyclerAdapter.ViewHolder>(){
+                                 val destinations : List<Places>,
+val listener: OnClickListener) : RecyclerView.Adapter<DestinatinRecyclerAdapter.ViewHolder>(){
 
  val layoutInflater = LayoutInflater.from(context)
 
@@ -83,16 +84,25 @@ if (destination.indoorActivity== true){
         val animalsImage = destinationView.findViewById<ImageView>(R.id.iv_attribute6)
         val shopImage = destinationView.findViewById<ImageView>(R.id.iv_attribute7)
         val indoorImage = destinationView.findViewById<ImageView>(R.id.iv_attribute8)
-
-
-
-
-
-
         val ageRecomendatin = destinationView.findViewById<TextView>(R.id.txtv_rclv_agerec)
         val moreButton = destinationView.findViewById<Button>(R.id.btn_more)
+        init {
+            itemView.setOnClickListener{
+                val postion = adapterPosition
+                listener.OnClick(postion)
 
 
+            }
+
+        }
+
+
+
+    }
+
+    interface OnClickListener{
+        fun OnClick(position: Int)
+       // https://www.youtube.com/watch?v=nvmqVN7kJ_Q
 
     }
 

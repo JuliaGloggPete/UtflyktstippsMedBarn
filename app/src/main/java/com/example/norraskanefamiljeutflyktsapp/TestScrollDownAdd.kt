@@ -1,9 +1,14 @@
 package com.example.norraskanefamiljeutflyktsapp
 
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -18,7 +23,7 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var descriptionEditText : EditText
     lateinit var ageRecommendaiton : String
     lateinit var checkBoxOnPlace: CheckBox
-    lateinit var latLng: LatLng //!!!!
+
     lateinit var checkBoxRestaurant: CheckBox
     lateinit var checkBoxPlayground: CheckBox
     lateinit var checkBoxBBQPlace: CheckBox
@@ -31,6 +36,18 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var priceEditText: EditText
     lateinit var openHoursEditText : EditText
     lateinit var homepageEditText :EditText
+
+    lateinit var locationPovider: FusedLocationProviderClient
+    lateinit var locationRequest: LocationRequest
+    lateinit var locationCallback: LocationCallback
+    private val REQUEST_LOCATION = 1
+
+    var longitude : Double? = null
+    var latitude : Double? = null
+
+
+
+
 
 
 
@@ -61,6 +78,32 @@ class TestScrollDownAdd : AppCompatActivity() {
 
         val addButton = findViewById<Button>(R.id.btn_add)
         val cancelButton = findViewById<Button>(R.id.btn_cancel)
+
+
+        locationPovider = LocationServices.getFusedLocationProviderClient(this)
+        locationRequest = LocationRequest.Builder(2000).build()
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationsResult: LocationResult) {
+                for (location in locationsResult.locations) {
+                    Log.d("PPP", "lat: ${location.latitude}," +
+                            " lng ${location.longitude}")
+                    latitude = location.latitude
+                    longitude = location.longitude
+                }
+
+            }
+
+        }
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION)
+        }
+
+
+
 
         addButton.setOnClickListener {
            saveDestination()
@@ -130,11 +173,21 @@ class TestScrollDownAdd : AppCompatActivity() {
         var homepage = homepageEditText.text.toString()
 
         var description = descriptionEditText.text.toString()
-        var latitude =40.8
-     var longitude = 40.9
+
 
      var restaurant  = false
      var accesDisability = false
+
+     if(checkBoxOnPlace.isChecked ){
+         latitude
+         longitude
+
+     } else {
+
+         latitude == null
+         longitude == null
+
+     }
 
      if (checkBoxHandicapAccess.isChecked){
           accesDisability = true
@@ -208,5 +261,44 @@ class TestScrollDownAdd : AppCompatActivity() {
 
 
     }
+
+    fun startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED) {
+            locationPovider.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper())
+
+        }
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_LOCATION){
+
+            if (grantResults.isNotEmpty()
+                && grantResults[0]== PackageManager.PERMISSION_GRANTED)
+            {
+                startLocationUpdates()
+
+
+            }
+
+
+
+        }
+    }
+
+
+
+
+
+
 
 }

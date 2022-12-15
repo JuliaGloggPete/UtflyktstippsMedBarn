@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     lateinit var emailView: EditText
     lateinit var passwordView: EditText
-    lateinit var locationPovider: FusedLocationProviderClient
+    /*lateinit var locationPovider: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
-    private val REQUEST_LOCATION = 1
+    private val REQUEST_LOCATION = 1 */
     lateinit var skipBtn : Button
 
     // val placesList = mutableListOf<Places>()
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        locationPovider = LocationServices.getFusedLocationProviderClient(this)
+      /*  locationPovider = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = LocationRequest.Builder(2000).build()
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationsResult: LocationResult) {
@@ -48,14 +48,14 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-        }
-        if (ActivityCompat.checkSelfPermission(this,
+        } */
+       /* if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION)
-        }
+        } */
 
         auth = Firebase.auth
 
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, DestinationsViewActivity::class.java)
 
-        intent.putExtra("Logged", loggedIn)
+        intent.putExtra("logged", loggedIn)
         startActivity(intent)
 
     }
@@ -224,7 +224,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun startLocationUpdates() {
+   /* fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -255,7 +255,7 @@ class MainActivity : AppCompatActivity() {
 
 
         }
-    }
+    } */
 
 
 }

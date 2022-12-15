@@ -48,7 +48,7 @@ lateinit var destinationImage : ImageView
             {
                 titleView.text =destination.title
                 descriptionView.text =destination.description
-                priceView.text = "Pris: "+destination.pris
+                priceView.text = "Pris: "+destination.price
                 durationView.text = "Uttflktslängt: "+destination.duration
                 adressView.text= "Adress: "+destination.adressStreetName+" "+destination.PostalCodeNVillage
                 homepageView.text = "Hemsida: "+destination.homepage

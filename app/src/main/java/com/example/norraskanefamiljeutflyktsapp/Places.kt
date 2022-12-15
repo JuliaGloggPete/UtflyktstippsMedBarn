@@ -1,8 +1,6 @@
 package com.example.norraskanefamiljeutflyktsapp
 
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.DocumentId
-import com.google.firebase.firestore.GeoPoint
 
 
 data class Places(
@@ -29,8 +27,8 @@ data class Places(
     var duration: String? = null,
     var ageFrom : String? = null,
 
-    var pris: String? = null, //!!!!!! svenska
-    var öppetider: String? = null,// svenska
+    var price: String? = null,
+    var openHours: String? = null,
     var destinationImage: Int? = null,
     @DocumentId var documentId : String? = null,
     )

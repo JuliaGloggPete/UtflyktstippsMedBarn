@@ -1,13 +1,17 @@
 package com.example.norraskanefamiljeutflyktsapp
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.OnClickListener{
@@ -27,11 +31,26 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
 
             //if  sign up // sign in = true
             // skick med över från innan
+            val loggedIn = intent.getBooleanExtra("logged",true)
+
+            if (loggedIn == true){
 
             val intent = Intent (this, TestScrollDownAdd::class.java)
-            startActivity(intent)
+            startActivity(intent)}
+
+            else{
+                Toast.makeText(this, "log in",Toast.LENGTH_SHORT).show()
+
+            }
+
 
         }
+
+
+
+
+
+
 
         val mapBtn = findViewById<Button>(R.id.btn_seeMap)
         mapBtn.setOnClickListener {

@@ -85,8 +85,8 @@ class TestScrollDownAdd : AppCompatActivity() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationsResult: LocationResult) {
                 for (location in locationsResult.locations) {
-                    Log.d("PPP", "lat: ${location.latitude}," +
-                            " lng ${location.longitude}")
+                    //Log.d("PPP", "lat: ${location.latitude}," +
+                      //      " lng ${location.longitude}")
                     latitude = location.latitude
                     longitude = location.longitude
                 }

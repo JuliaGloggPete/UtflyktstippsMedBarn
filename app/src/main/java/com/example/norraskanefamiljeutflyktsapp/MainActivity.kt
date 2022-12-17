@@ -1,19 +1,12 @@
 package com.example.norraskanefamiljeutflyktsapp
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Looper
-import android.os.Looper.getMainLooper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.startActivity
-import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -37,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-      /*  locationPovider = LocationServices.getFusedLocationProviderClient(this)
+      /* locationPovider = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = LocationRequest.Builder(2000).build()
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationsResult: LocationResult) {
@@ -129,7 +122,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
         val intent = Intent(this, DestinationsViewActivity::class.java)
+        //
+        //val intent = Intent(this, ImageUploadtry1::class.java)
 
         intent.putExtra("logged", loggedIn)
         startActivity(intent)

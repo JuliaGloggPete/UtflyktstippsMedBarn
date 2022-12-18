@@ -2,6 +2,7 @@ package com.example.norraskanefamiljeutflyktsapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -61,25 +62,39 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
     }
 
     fun addLegendFragment(view: View) {
-        if (legendFragment != null) {
+     /*   if (legendFragment != null) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.remove(legendFragment)
             transaction.commit()
 
 
-        }
+        }*/
+
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.framelayout, legendFragment, "legendFragment")
         transaction.commit()
+
+
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        if(event?.action == MotionEvent.ACTION_UP){
+            removeLegend()
+            removeLoginFragment()
+        }
+
+        return true
+
     }
 
     fun removeLegend() {
-        // val legendFragment = supportFragmentManager.findFragmentByTag("legendFragment")
+        val myLegendFragment = supportFragmentManager.findFragmentByTag("legendFragment")
 
-        if (legendFragment != null) {
+        if (myLegendFragment != null) {
             val transaction = supportFragmentManager.beginTransaction()
-            transaction.remove(legendFragment)
+            transaction.remove(myLegendFragment)
             transaction.commit()
 
 
@@ -92,6 +107,17 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.LogInFrameLayout2, plsLogInFragment, "logInFragment")
         transaction.commit()
+    }
+
+    fun removeLoginFragment() {
+
+        val addPleaseLoginFragment = supportFragmentManager.findFragmentByTag("logInFragment")
+        if (addPleaseLoginFragment != null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.remove(addPleaseLoginFragment)
+            transaction.commit()
+
+        }
     }
 
 }

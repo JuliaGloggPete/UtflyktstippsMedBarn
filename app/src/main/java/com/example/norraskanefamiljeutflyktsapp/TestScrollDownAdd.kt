@@ -1,15 +1,13 @@
 package com.example.norraskanefamiljeutflyktsapp
 
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -130,7 +128,7 @@ class TestScrollDownAdd : AppCompatActivity() {
                 id: Long
             ) {
                 durationOfActivity = duration[position]
-                Toast.makeText(applicationContext,"selected duration"+ duration[position],Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext,"selected duration"+ duration[position],Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -167,6 +165,9 @@ class TestScrollDownAdd : AppCompatActivity() {
     }
 
  fun saveDestination(){
+
+
+
         var title  = titleEditText.text.toString()
         var adressStreetName = streetEditText.text.toString()
         var postalCodeNVillage= postalCodeNCityEditText.text.toString()
@@ -255,9 +256,16 @@ class TestScrollDownAdd : AppCompatActivity() {
         )
      //DataManager.destinations.add(destination)
 
-     db.collection("destinations").add(destination)
-     finish()
+     if (title.isEmpty() || description.isEmpty()) {
+         Toast.makeText(applicationContext,"Namn och beskrivning får inte vara tomt",Toast.LENGTH_LONG).show()
 
+
+
+     } else {
+
+         db.collection("destinations").add(destination)
+         finish()
+     }
 
 
     }

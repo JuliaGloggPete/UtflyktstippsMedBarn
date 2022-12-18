@@ -6,4 +6,21 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AllDestinationsMapsActivity" />
+    tools:context=".AllDestinationsMapsActivity">
+<Button
+android:id="@+id/btn_back_from_maps"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginBottom="16dp"
+
+android:layout_marginEnd="16dp"
+    android:layout_marginTop="16dp"
+
+    android:layout_marginStart="16dp"
+    android:backgroundTint="#FFAB40"
+    android:textColor="#1C431D"
+
+
+
+android:text="Tillbaka"/>
+</fragment>

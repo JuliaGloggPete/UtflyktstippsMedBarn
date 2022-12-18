@@ -1,28 +1,33 @@
 package com.example.norraskanefamiljeutflyktsapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.example.norraskanefamiljeutflyktsapp.DataManager.destinations
-
+import com.example.norraskanefamiljeutflyktsapp.databinding.ActivityAllDestinationsMapsBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.norraskanefamiljeutflyktsapp.databinding.ActivityAllDestinationsMapsBinding
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
 
 class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityAllDestinationsMapsBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAllDestinationsMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val btnBack2DestinationView = findViewById<Button>(R.id.btn_back_from_maps)
+        btnBack2DestinationView.setOnClickListener {
+            finish()
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager

@@ -51,7 +51,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#FFAB40"
-        android:onClick="addLegendFragment"
+        android:onClick="addNRemoveLegendFragment"
         android:text="Legend"
         android:textColor="#1C431D"
         app:layout_constraintBottom_toBottomOf="parent"

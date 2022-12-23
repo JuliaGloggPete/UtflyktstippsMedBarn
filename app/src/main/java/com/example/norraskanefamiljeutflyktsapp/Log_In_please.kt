@@ -1,10 +1,12 @@
 package com.example.norraskanefamiljeutflyktsapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_log__in_please.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +36,25 @@ class Log_In_please : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_log__in_please, container, false)
+      val view : View =inflater!!.inflate(R.layout.fragment_log__in_please, container, false)
+
+        view.btn_back_to_logIn.setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+
+        }
+
+        view.btn_fragm_cancel.setOnClickListener {
+            val loggedIn = false
+            val intent = Intent(context, DestinationsViewActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra("logged", loggedIn)
+            startActivity(intent)
+
+        }
+
+        return view
     }
 
     companion object {
@@ -56,4 +76,6 @@ class Log_In_please : Fragment() {
                 }
             }
     }
+
+
 }

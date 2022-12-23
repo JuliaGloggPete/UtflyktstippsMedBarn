@@ -123,9 +123,9 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+      // val intent = Intent(this, ImageTakeInActivity::class.java)
         val intent = Intent(this, DestinationsViewActivity::class.java)
         //
-        //val intent = Intent(this, ImageUploadtry1::class.java)
 
         intent.putExtra("logged", loggedIn)
         startActivity(intent)

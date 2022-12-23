@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +22,10 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = DestinatinRecyclerAdapter(this, DataManager.destinations, this)
+
+
+
+
         val addDestinationButton = findViewById<FloatingActionButton>(R.id.floatingActionButton2)
         addDestinationButton.setOnClickListener {
             val loggedIn = intent.getBooleanExtra("logged", true)
@@ -32,8 +35,8 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
                 val intent = Intent(this, TestScrollDownAdd::class.java)
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "log in", Toast.LENGTH_SHORT).show()
-                addPleaseLogInFragment()
+               // Toast.makeText(this, "log in", Toast.LENGTH_SHORT).show()
+                addNRemovePleaseLogInFragment()
             }
         }
         val mapBtn = findViewById<Button>(R.id.btn_seeMap)
@@ -61,21 +64,22 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
 
     }
 
-    fun addLegendFragment(view: View) {
-     /*   if (legendFragment != null) {
+    fun addNRemoveLegendFragment(view: View) {
+
+        val frag = supportFragmentManager.findFragmentByTag("legendFragment")
+        if (frag != null){
             val transaction = supportFragmentManager.beginTransaction()
             transaction.remove(legendFragment)
+            transaction.commit()}
+
+
+       else {
+
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.framelayout, legendFragment, "legendFragment")
             transaction.commit()
 
-
-        }*/
-
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.framelayout, legendFragment, "legendFragment")
-        transaction.commit()
-
-
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -97,17 +101,36 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
             transaction.remove(myLegendFragment)
             transaction.commit()
 
-
         }
 
 
     }
 
-    fun addPleaseLogInFragment() {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.LogInFrameLayout2, plsLogInFragment, "logInFragment")
-        transaction.commit()
+    fun addNRemovePleaseLogInFragment() {
+
+        val frag = supportFragmentManager.findFragmentByTag("logInFragment")
+        if (frag != null){
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.remove(plsLogInFragment)
+            transaction.commit()}
+
+
+        else {
+
+
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.add(R.id.LogInFrameLayout2, plsLogInFragment, "logInFragment")
+            transaction.commit()
+
+        }
     }
+
+
+
+
+
+
+
 
     fun removeLoginFragment() {
 

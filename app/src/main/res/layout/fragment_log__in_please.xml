@@ -6,7 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignWithParentIfMissing="false"
-    android:layout_marginStart="50dp"
+    android:layout_marginStart="55dp"
     android:background="#FFFFFF"
     android:backgroundTint="#D3E4D4"
     app:flow_horizontalAlign="center"
@@ -23,6 +23,7 @@
         android:layout_marginEnd="16dp"
         android:backgroundTint="#FFAB40"
         android:text="Ångra"
+        android:textColor="#1C431D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -34,6 +35,7 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="#FFAB40"
         android:text="Logga in"
+        android:textColor="#1C431D"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 

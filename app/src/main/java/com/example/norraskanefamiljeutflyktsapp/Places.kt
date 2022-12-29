@@ -30,5 +30,6 @@ data class Places(
     var price: String? = null,
     var openHours: String? = null,
     var destinationImage: Int? = null,
+    var destinationImagePath : String? = null,
     @DocumentId var documentId : String? = null,
     )

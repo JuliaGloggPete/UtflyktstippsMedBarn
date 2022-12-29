@@ -1,8 +1,10 @@
 package com.example.norraskanefamiljeutflyktsapp
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +16,14 @@ import com.google.firebase.ktx.Firebase
 
 class TestScrollDownAdd : AppCompatActivity() {
 
-    lateinit var db : FirebaseFirestore
-    lateinit var titleEditText : EditText
-    lateinit var streetEditText : EditText
-    lateinit var postalCodeNCityEditText : EditText
-    lateinit var descriptionEditText : EditText
-    lateinit var ageRecommendaiton : String
+    lateinit var db: FirebaseFirestore
+    lateinit var titleEditText: EditText
+    lateinit var streetEditText: EditText
+    lateinit var postalCodeNCityEditText: EditText
+    lateinit var descriptionEditText: EditText
+    lateinit var imageFileName: String
+
+    lateinit var ageRecommendaiton: String
     lateinit var checkBoxOnPlace: CheckBox
 
     lateinit var checkBoxRestaurant: CheckBox
@@ -30,23 +34,18 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var checkBoxShop: CheckBox
     lateinit var checkBoxStrolerAccess: CheckBox
     lateinit var checkBoxHandicapAccess: CheckBox
-    lateinit var durationOfActivity : String
+    lateinit var durationOfActivity: String
     lateinit var priceEditText: EditText
-    lateinit var openHoursEditText : EditText
-    lateinit var homepageEditText :EditText
+    lateinit var openHoursEditText: EditText
+    lateinit var homepageEditText: EditText
 
     lateinit var locationPovider: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
     private val REQUEST_LOCATION = 1
 
-    var longitude : Double? = null
-    var latitude : Double? = null
-
-
-
-
-
+    var longitude: Double? = null
+    var latitude: Double? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,8 +62,8 @@ class TestScrollDownAdd : AppCompatActivity() {
         //ageRecommendaiton = findViewById<Spinner>(R.id.spinner_age)
         checkBoxOnPlace = findViewById<CheckBox>(R.id.checkBox_onPlace)
         checkBoxRestaurant = findViewById<CheckBox>(R.id.checkB_Rest_Bistro)
-        checkBoxPlayground  = findViewById<CheckBox>(R.id.checkB_playgr)
-        checkBoxBBQPlace =  findViewById<CheckBox>(R.id.checkB_bbqPlace)
+        checkBoxPlayground = findViewById<CheckBox>(R.id.checkB_playgr)
+        checkBoxBBQPlace = findViewById<CheckBox>(R.id.checkB_bbqPlace)
         checkBoxIndoor = findViewById<CheckBox>(R.id.checkB_indoor)
         checkBoxAnimalsToSee = findViewById<CheckBox>(R.id.checkB_Animals)
         checkBoxShop = findViewById<CheckBox>(R.id.checkB_store)
@@ -76,6 +75,14 @@ class TestScrollDownAdd : AppCompatActivity() {
 
         val addButton = findViewById<Button>(R.id.btn_add)
         val cancelButton = findViewById<Button>(R.id.btn_cancel)
+        val toImageUploadButton = findViewById<Button>(R.id.btn_goToUploadActivity)
+
+        toImageUploadButton.setOnClickListener {
+            val intent = Intent(this, TakeInImageActivity::class.java)
+
+            startActivity(intent)
+
+        }
 
 
         locationPovider = LocationServices.getFusedLocationProviderClient(this)
@@ -84,7 +91,7 @@ class TestScrollDownAdd : AppCompatActivity() {
             override fun onLocationResult(locationsResult: LocationResult) {
                 for (location in locationsResult.locations) {
                     //Log.d("PPP", "lat: ${location.latitude}," +
-                      //      " lng ${location.longitude}")
+                    //      " lng ${location.longitude}")
                     latitude = location.latitude
                     longitude = location.longitude
                 }
@@ -92,35 +99,40 @@ class TestScrollDownAdd : AppCompatActivity() {
             }
 
         }
-        if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION)
+                REQUEST_LOCATION
+            )
         }
 
 
 
 
         addButton.setOnClickListener {
-           saveDestination()
+            saveDestination()
         }
         cancelButton.setOnClickListener { finish() }
 
         val duration = arrayOf(
-        "ej angiven",
-        "ca 30 min", "1-2 timmar","halvdagsutflykt",
-        "heldagsutflykt", "heldagsutflykt med övernattningsmöjlighet"
+            "ej angiven",
+            "ca 30 min", "1-2 timmar", "halvdagsutflykt",
+            "heldagsutflykt", "heldagsutflykt med övernattningsmöjlighet"
         )
 
         val durationsoinner = findViewById<Spinner>(R.id.spinner_duration)
 
         val durationArrayAdapter = ArrayAdapter<String>(
-            this, android.R.layout.simple_spinner_item,duration
+            this, android.R.layout.simple_spinner_item, duration
         )
-        durationsoinner.adapter =durationArrayAdapter
-        durationsoinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        durationsoinner.adapter = durationArrayAdapter
+        durationsoinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -137,16 +149,18 @@ class TestScrollDownAdd : AppCompatActivity() {
         }
 
         val ageRec = arrayOf(
-        "alla ålder", "från 1", "från 2", "från 3", "från 4", "från 5",
-      "från 6", "från 7", "från 8", "från 9")
+            "alla ålder", "från 1", "från 2", "från 3", "från 4", "från 5",
+            "från 6", "från 7", "från 8", "från 9"
+        )
 
-        val agespinner= findViewById<Spinner>(R.id.spinner_age)
-       val ageArrayAdapter = ArrayAdapter<String>(
+        val agespinner = findViewById<Spinner>(R.id.spinner_age)
+        val ageArrayAdapter = ArrayAdapter<String>(
             this,
             android.R.layout.simple_spinner_item,
-           ageRec)
-           agespinner.adapter =ageArrayAdapter
-        agespinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            ageRec
+        )
+        agespinner.adapter = ageArrayAdapter
+        agespinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -154,8 +168,9 @@ class TestScrollDownAdd : AppCompatActivity() {
                 id: Long
             ) {
                 ageRecommendaiton = ageRec[position]
-              // Toast.makeText(applicationContext,"selected age"+ ageRec[position],Toast.LENGTH_SHORT).show()
+                // Toast.makeText(applicationContext,"selected age"+ ageRec[position],Toast.LENGTH_SHORT).show()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
@@ -164,108 +179,109 @@ class TestScrollDownAdd : AppCompatActivity() {
 
     }
 
- fun saveDestination(){
+    fun saveDestination() {
 
 
-
-        var title  = titleEditText.text.toString()
+        var title = titleEditText.text.toString()
         var adressStreetName = streetEditText.text.toString()
-        var postalCodeNVillage= postalCodeNCityEditText.text.toString()
+        var postalCodeNVillage = postalCodeNCityEditText.text.toString()
         var homepage = homepageEditText.text.toString()
 
         var description = descriptionEditText.text.toString()
 
 
-     var restaurant  = false
-     var accesDisability = false
+        var restaurant = false
+        var accesDisability = false
 
-     if(checkBoxOnPlace.isChecked ){
-         latitude
-         longitude
+        if (checkBoxOnPlace.isChecked) {
+            latitude
+            longitude
 
-     } else {
+        } else {
 
-         latitude == null
-         longitude == null
+            latitude == null
+            longitude == null
 
-     }
+        }
 
-     if (checkBoxHandicapAccess.isChecked){
-          accesDisability = true
-     }
+        if (checkBoxHandicapAccess.isChecked) {
+            accesDisability = true
+        }
 
-     if (checkBoxRestaurant.isChecked){
-          restaurant  = true
-     }
+        if (checkBoxRestaurant.isChecked) {
+            restaurant = true
+        }
 
-     var  bbqplace = false
+        var bbqplace = false
 
-     if (checkBoxBBQPlace.isChecked){
-         bbqplace = true
+        if (checkBoxBBQPlace.isChecked) {
+            bbqplace = true
 
-     }
-     var shop = false
-     if (checkBoxShop.isChecked){
-         shop = true
+        }
+        var shop = false
+        if (checkBoxShop.isChecked) {
+            shop = true
 
-     }
+        }
 
-     var playgroundNearby =false
-     if(checkBoxPlayground.isChecked){
-          playgroundNearby = true
-    }
-     var animalstosee = false
+        var playgroundNearby = false
+        if (checkBoxPlayground.isChecked) {
+            playgroundNearby = true
+        }
+        var animalstosee = false
 
-     if (checkBoxAnimalsToSee.isChecked){
+        if (checkBoxAnimalsToSee.isChecked) {
 
-      animalstosee = true
-     }
-     var accesStroller = false
-     if (checkBoxStrolerAccess.isChecked){
+            animalstosee = true
+        }
+        var accesStroller = false
+        if (checkBoxStrolerAccess.isChecked) {
 
-        accesStroller = true
-     }
-     var indoor = false
-     if (checkBoxIndoor.isChecked){
+            accesStroller = true
+        }
+        var indoor = false
+        if (checkBoxIndoor.isChecked) {
 
-         indoor = true
-     }
+            indoor = true
+        }
 
-            var extraPlaceholder = false
-
-
+        var extraPlaceholder = false
 
 
         var duration = durationOfActivity
         var ageFrom = ageRecommendaiton
 
         var price = priceEditText.text.toString()
-        var openinghours= openHoursEditText.text.toString()
+        var openinghours = openHoursEditText.text.toString()
         var destinationImage = R.drawable.example_picture
 
 
 
-        val destination = Places(title,adressStreetName,
-            postalCodeNVillage,homepage,
-        description,
-            latitude,longitude,
-            restaurant,playgroundNearby,
-            bbqplace,animalstosee,shop,
-            accesDisability,accesStroller,indoor,false,
-            duration,ageFrom,price,openinghours,destinationImage
+        val destination = Places(
+            title, adressStreetName,
+            postalCodeNVillage, homepage,
+            description,
+            latitude, longitude,
+            restaurant, playgroundNearby,
+            bbqplace, animalstosee, shop,
+            accesDisability, accesStroller, indoor, false,
+            duration, ageFrom, price, openinghours, destinationImage, imageFileName
         )
-     //DataManager.destinations.add(destination)
+        //DataManager.destinations.add(destination)
 
-     if (title.isEmpty() || description.isEmpty()) {
-         Toast.makeText(applicationContext,"Namn och beskrivning får inte vara tomt",Toast.LENGTH_LONG).show()
+        if (title.isEmpty() || description.isEmpty()) {
+            Toast.makeText(
+                applicationContext,
+                "Namn och beskrivning får inte vara tomt",
+                Toast.LENGTH_LONG
+            ).show()
 
 
+        } else {
 
-     } else {
-
-         db.collection("destinations").add(destination)
-         finish()
-     }
+            db.collection("destinations").add(destination)
+            finish()
+        }
 
 
     }
@@ -273,40 +289,49 @@ class TestScrollDownAdd : AppCompatActivity() {
     fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED) {
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) ==
+            PackageManager.PERMISSION_GRANTED
+        ) {
             locationPovider.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
-                Looper.getMainLooper())
+                Looper.getMainLooper()
+            )
 
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        imageFileName = intent.getStringExtra("imageName").toString()
+        Log.d("###", "${imageFileName}")
+        if (imageFileName != null)
+        { }
+        //val storageReference = FirebaseStorage.getInstance().reference.child("images/${destinationImagePath}.jpg")
+
+
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_LOCATION){
+        if (requestCode == REQUEST_LOCATION) {
 
             if (grantResults.isNotEmpty()
-                && grantResults[0]== PackageManager.PERMISSION_GRANTED)
-            {
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
                 startLocationUpdates()
 
 
             }
 
 
-
         }
     }
-
-
-
-
-
 
 
 }

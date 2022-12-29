@@ -4,11 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.norraskanefamiljeutflyktsapp.DataManager.destinations
+import com.google.firebase.storage.FirebaseStorage
 
 class DestinatinRecyclerAdapter (val context: Context,
                                  val destinations : List<Places>,
@@ -28,7 +27,11 @@ val listener: OnClickListener) : RecyclerView.Adapter<DestinatinRecyclerAdapter.
    val destination = destinations[position]
         holder.titleTextView.text = destination.title
         holder.descriptionTextView.text = destination.description
-        destination.destinationImage?.let { holder.destinationImage.setImageResource(it) }
+        //destination.destinationImage?.let { holder.destinationImage.setImageResource(it) }
+        //holder.destinationImage.setImageBitmap()
+        val storageReference = FirebaseStorage.getInstance().reference.child("images/${destination.destinationImagePath}.jpg")
+
+
         holder.ageRecomendatin.text =destination.ageFrom
         if (destination.restaurant == true){
             holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_24)

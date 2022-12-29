@@ -47,8 +47,15 @@ class Log_In_please : Fragment() {
 
         view.btn_fragm_cancel.setOnClickListener {
             val loggedIn = false
+
+
+
+
+            /*val transaction = supportFragmentManager.beginTransaction()
+            transaction.remove()
+            transaction.commit()*/
             val intent = Intent(context, DestinationsViewActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intent.putExtra("logged", loggedIn)
             startActivity(intent)
 

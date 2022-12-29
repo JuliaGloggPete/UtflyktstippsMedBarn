@@ -129,6 +129,24 @@
                 android:dropDownWidth="wrap_content" />
 
             <TextView
+                android:id="@+id/uploadImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Vill du ladda upp ett bild tryck på knappen" />
+
+            <Button
+                android:id="@+id/btn_goToUploadActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="#FFAB40"
+                android:text="Ladda upp"
+                android:textColor="#1C431D" />
+
+            <TextView
                 android:id="@+id/tv_longitudeLatitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

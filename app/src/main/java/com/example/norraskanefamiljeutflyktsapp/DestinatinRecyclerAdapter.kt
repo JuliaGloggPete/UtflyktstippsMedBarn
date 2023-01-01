@@ -7,13 +7,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.storage.FirebaseStorage
+import com.bumptech.glide.Glide
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class DestinatinRecyclerAdapter (val context: Context,
                                  val destinations : List<Places>,
 val listener: OnClickListener) : RecyclerView.Adapter<DestinatinRecyclerAdapter.ViewHolder>(){
 
  val layoutInflater = LayoutInflater.from(context)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -27,9 +30,21 @@ val listener: OnClickListener) : RecyclerView.Adapter<DestinatinRecyclerAdapter.
    val destination = destinations[position]
         holder.titleTextView.text = destination.title
         holder.descriptionTextView.text = destination.description
-        //destination.destinationImage?.let { holder.destinationImage.setImageResource(it) }
-        //holder.destinationImage.setImageBitmap()
-        val storageReference = FirebaseStorage.getInstance().reference.child("images/${destination.destinationImagePath}.jpg")
+        if(destination.destinationImagePath.isNotEmpty()) {
+            val imageRef = Firebase.storage.reference.child(destination.destinationImagePath)
+            imageRef.downloadUrl.addOnSuccessListener { Uri ->
+                val imageUrl = Uri.toString()
+
+                Glide.with(context)
+                    .load(imageUrl)
+                    .into(holder.destinationImage)
+            }
+
+                        }           else
+        {destination.destinationImage?.let { holder.destinationImage.setImageResource(it) }}
+
+
+
 
 
         holder.ageRecomendatin.text =destination.ageFrom
@@ -92,16 +107,17 @@ if (destination.indoorActivity== true){
 
         val titleTextView = destinationView.findViewById<TextView>(R.id.tv_titleRecyclerview)
         val descriptionTextView = destinationView.findViewById<TextView>(R.id.tv_ShortTextdescr)
-        val destinationImage = destinationView.findViewById<ImageView>(R.id.imageView)
-        val restaurantImage = destinationView.findViewById<ImageView>(R.id.iv_attribute1)
-        val strolerImage = destinationView.findViewById<ImageView>(R.id.iv_attribute2)
-        val wheelChairImage = destinationView.findViewById<ImageView>(R.id.iv_attribute3)
-        val BBQImage = destinationView.findViewById<ImageView>(R.id.iv_attribute4)
-        val playgroundImage = destinationView.findViewById<ImageView>(R.id.iv_attribute5)
-        val animalsImage = destinationView.findViewById<ImageView>(R.id.iv_attribute6)
-        val shopImage = destinationView.findViewById<ImageView>(R.id.iv_attribute7)
-        val indoorImage = destinationView.findViewById<ImageView>(R.id.iv_attribute8)
+        val destinationImage = destinationView.findViewById<ImageView>(R.id.iv_destinationImage)
+        val restaurantImage = destinationView.findViewById<ImageView>(R.id.iv_restaurantIcon)
+        val strolerImage = destinationView.findViewById<ImageView>(R.id.iv_strolerFriendly)
+        val wheelChairImage = destinationView.findViewById<ImageView>(R.id.iv_handicapFriendly)
+        val BBQImage = destinationView.findViewById<ImageView>(R.id.iv_bbqGrill)
+        val playgroundImage = destinationView.findViewById<ImageView>(R.id.iv_playground)
+        val animalsImage = destinationView.findViewById<ImageView>(R.id.iv_animalsToSee)
+        val shopImage = destinationView.findViewById<ImageView>(R.id.iv_shop)
+        val indoorImage = destinationView.findViewById<ImageView>(R.id.iv_indoorOrRainProtectet)
         val ageRecomendatin = destinationView.findViewById<TextView>(R.id.txtv_rclv_agerec)
+
 
         init {
             itemView.setOnClickListener{

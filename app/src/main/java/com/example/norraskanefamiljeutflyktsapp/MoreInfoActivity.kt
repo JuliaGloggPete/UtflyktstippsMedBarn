@@ -1,10 +1,13 @@
 package com.example.norraskanefamiljeutflyktsapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class MoreInfoActivity : AppCompatActivity() {
 
@@ -53,8 +56,19 @@ lateinit var destinationImage : ImageView
                 adressView.text= "Adress: "+destination.adressStreetName+" "+destination.PostalCodeNVillage
                 homepageView.text = "Hemsida: "+destination.homepage
 
-                //attributesView.text = destination.playgroundNearby.toString()
-                destination.destinationImage?.let { destinationImage.setImageResource(it) }
+                if(destination.destinationImagePath.isNotEmpty()) {
+                    val imageRef = Firebase.storage.reference.child(destination.destinationImagePath)
+                    imageRef.downloadUrl.addOnSuccessListener { Uri ->
+                        val imageUrl = Uri.toString()
+
+                        Glide.with(this)
+                            .load(imageUrl)
+                            .into(destinationImage)
+                    }
+
+                }           else
+                {
+                destination.destinationImage?.let { destinationImage.setImageResource(it) }}
 
             }
         }

@@ -1,7 +1,4 @@
 package com.example.norraskanefamiljeutflyktsapp
-import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 
 object DataManager {
@@ -11,10 +8,7 @@ object DataManager {
 
     /*init {
         createBaseData()
-
     }
-
-
     fun createBaseData(){
 
         destinations.add(Places("Wanås Slott","Wanås",
@@ -49,11 +43,6 @@ object DataManager {
             false,"1-2 timmar","från 2år","150 kr per dressin",
             " efter bokning  044-440 48",R.drawable.aka_dressin
         ))
-
-
-
-
-
 
     }*/
 

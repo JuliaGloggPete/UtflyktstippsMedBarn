@@ -25,12 +25,12 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="16dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/iv_attribute3"
+        app:layout_constraintBottom_toTopOf="@+id/iv_handicapFriendly"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_titleRecyclerview" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_destinationImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="25dp"
@@ -51,67 +51,67 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/iv_attribute4"
+        android:id="@+id/iv_bbqGrill"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txtv_rclv_agerec"
-        app:layout_constraintStart_toEndOf="@+id/iv_attribute3"
+        app:layout_constraintStart_toEndOf="@+id/iv_handicapFriendly"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/iv_attribute3"
+        android:id="@+id/iv_handicapFriendly"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txtv_rclv_agerec"
-        app:layout_constraintStart_toEndOf="@+id/iv_attribute2"
+        app:layout_constraintStart_toEndOf="@+id/iv_strolerFriendly"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/iv_attribute2"
+        android:id="@+id/iv_strolerFriendly"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txtv_rclv_agerec"
-        app:layout_constraintStart_toEndOf="@+id/iv_attribute5"
+        app:layout_constraintStart_toEndOf="@+id/iv_playground"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/iv_attribute6"
+        android:id="@+id/iv_animalsToSee"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txtv_rclv_agerec"
-        app:layout_constraintStart_toEndOf="@+id/iv_attribute4"
+        app:layout_constraintStart_toEndOf="@+id/iv_bbqGrill"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/iv_attribute7"
+        android:id="@+id/iv_shop"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txtv_rclv_agerec"
-        app:layout_constraintStart_toEndOf="@+id/iv_attribute6"
+        app:layout_constraintStart_toEndOf="@+id/iv_animalsToSee"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/iv_attribute8"
+        android:id="@+id/iv_indoorOrRainProtectet"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txtv_rclv_agerec"
-        app:layout_constraintStart_toEndOf="@+id/iv_attribute7"
+        app:layout_constraintStart_toEndOf="@+id/iv_shop"
         tools:srcCompat="@drawable/ic_baseline_home_grey" />
 
     <ImageView
-        android:id="@+id/iv_attribute1"
+        android:id="@+id/iv_restaurantIcon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="32dp"
@@ -122,13 +122,13 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/iv_attribute5"
+        android:id="@+id/iv_playground"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txtv_rclv_agerec"
-        app:layout_constraintStart_toEndOf="@+id/iv_attribute1"
+        app:layout_constraintStart_toEndOf="@+id/iv_restaurantIcon"
         tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

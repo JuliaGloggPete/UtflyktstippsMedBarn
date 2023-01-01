@@ -135,6 +135,12 @@
                 android:layout_marginStart="16dp"
                 android:text="Vill du ladda upp ett bild tryck på knappen" />
 
+            <ImageView
+                android:id="@+id/iv_uploadIamge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:srcCompat="@tools:sample/avatars" />
+
             <Button
                 android:id="@+id/btn_goToUploadActivity"
                 android:layout_width="wrap_content"
@@ -145,6 +151,12 @@
                 android:backgroundTint="#FFAB40"
                 android:text="Ladda upp"
                 android:textColor="#1C431D" />
+
+            <Button
+                android:id="@+id/kontrollbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
 
             <TextView
                 android:id="@+id/tv_longitudeLatitude"

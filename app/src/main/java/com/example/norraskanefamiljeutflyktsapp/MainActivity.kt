@@ -14,41 +14,19 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
-
+// https://www.youtube.com/watch?v=0ok8e0JfIoo&t=35s
     lateinit var auth: FirebaseAuth
     lateinit var emailView: EditText
     lateinit var passwordView: EditText
-    /*lateinit var locationPovider: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
-    lateinit var locationCallback: LocationCallback
-    private val REQUEST_LOCATION = 1 */
     lateinit var skipBtn : Button
 
-    // val placesList = mutableListOf<Places>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-      /* locationPovider = LocationServices.getFusedLocationProviderClient(this)
-        locationRequest = LocationRequest.Builder(2000).build()
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationsResult: LocationResult) {
-                for (location in locationsResult.locations) {
-                    Log.d("PPP", "lat: ${location.latitude}," +
-                            " lng ${location.longitude}")
-                }
 
-            }
-
-        } */
-       /* if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION)
-        } */
 
         auth = Firebase.auth
 
@@ -219,39 +197,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-   /* fun startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED) {
-            locationPovider.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                Looper.getMainLooper())
-
-        }
-    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_LOCATION){
-
-            if (grantResults.isNotEmpty()
-                && grantResults[0]==PackageManager.PERMISSION_GRANTED)
-            {
-                startLocationUpdates()
-
-
-            }
-
-
-
-        }
-    } */
 
 
 }

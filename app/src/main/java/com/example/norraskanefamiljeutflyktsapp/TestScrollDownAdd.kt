@@ -1,7 +1,9 @@
 package com.example.norraskanefamiljeutflyktsapp
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -13,6 +15,9 @@ import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TestScrollDownAdd : AppCompatActivity() {
 
@@ -21,7 +26,7 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var streetEditText: EditText
     lateinit var postalCodeNCityEditText: EditText
     lateinit var descriptionEditText: EditText
-    lateinit var imageFileName: String
+    lateinit var downloadUrl: String
 
     lateinit var ageRecommendaiton: String
     lateinit var checkBoxOnPlace: CheckBox
@@ -38,6 +43,7 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var priceEditText: EditText
     lateinit var openHoursEditText: EditText
     lateinit var homepageEditText: EditText
+    lateinit var takeInPick : ImageView
 
     lateinit var locationPovider: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
@@ -46,6 +52,11 @@ class TestScrollDownAdd : AppCompatActivity() {
 
     var longitude: Double? = null
     var latitude: Double? = null
+
+    lateinit var destinationPath :String
+
+    lateinit var imageUri: Uri
+    lateinit var imageFileName: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +70,6 @@ class TestScrollDownAdd : AppCompatActivity() {
         postalCodeNCityEditText = findViewById(R.id.et_postalCodeNCity)
         homepageEditText = findViewById(R.id.et_Homepage)
         descriptionEditText = findViewById(R.id.et_descritption)
-        //ageRecommendaiton = findViewById<Spinner>(R.id.spinner_age)
         checkBoxOnPlace = findViewById<CheckBox>(R.id.checkBox_onPlace)
         checkBoxRestaurant = findViewById<CheckBox>(R.id.checkB_Rest_Bistro)
         checkBoxPlayground = findViewById<CheckBox>(R.id.checkB_playgr)
@@ -69,20 +79,24 @@ class TestScrollDownAdd : AppCompatActivity() {
         checkBoxShop = findViewById<CheckBox>(R.id.checkB_store)
         checkBoxStrolerAccess = findViewById<CheckBox>(R.id.checkB_strollerAcces)
         checkBoxHandicapAccess = findViewById<CheckBox>(R.id.checkB_handicapAcces)
-        //durationOfActivity = findViewById<Spinner>(R.id.spinner_duration)
         priceEditText = findViewById(R.id.et_price)
         openHoursEditText = findViewById(R.id.et_OpenHours)
 
         val addButton = findViewById<Button>(R.id.btn_add)
         val cancelButton = findViewById<Button>(R.id.btn_cancel)
         val toImageUploadButton = findViewById<Button>(R.id.btn_goToUploadActivity)
+        val kontrollButton = findViewById<Button>(R.id.kontrollbutton)
 
         toImageUploadButton.setOnClickListener {
-            val intent = Intent(this, TakeInImageActivity::class.java)
+            //val intent = Intent(this, TakeInImageActivity::class.java)
 
-            startActivity(intent)
+           // startActivity(intent)
+            selectImage()
+
+            //uploadImgae()
 
         }
+        kontrollButton.setOnClickListener { uploadImgae() }
 
 
         locationPovider = LocationServices.getFusedLocationProviderClient(this)
@@ -168,7 +182,7 @@ class TestScrollDownAdd : AppCompatActivity() {
                 id: Long
             ) {
                 ageRecommendaiton = ageRec[position]
-                // Toast.makeText(applicationContext,"selected age"+ ageRec[position],Toast.LENGTH_SHORT).show()
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -256,7 +270,6 @@ class TestScrollDownAdd : AppCompatActivity() {
         var destinationImage = R.drawable.example_picture
 
 
-
         val destination = Places(
             title, adressStreetName,
             postalCodeNVillage, homepage,
@@ -265,7 +278,7 @@ class TestScrollDownAdd : AppCompatActivity() {
             restaurant, playgroundNearby,
             bbqplace, animalstosee, shop,
             accesDisability, accesStroller, indoor, false,
-            duration, ageFrom, price, openinghours, destinationImage, imageFileName
+            duration, ageFrom, price, openinghours, destinationImage,destinationPath
         )
         //DataManager.destinations.add(destination)
 
@@ -302,17 +315,90 @@ class TestScrollDownAdd : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        imageFileName = intent.getStringExtra("imageName").toString()
-        Log.d("###", "${imageFileName}")
-        if (imageFileName != null)
-        { }
-        //val storageReference = FirebaseStorage.getInstance().reference.child("images/${destinationImagePath}.jpg")
+    /*  override fun onResume() {
+          super.onResume()
+          imageFileName = intent.getStringExtra("imageName").toString()
+
+
+          downloadUrl = intent.getStringExtra("downloadUrl").toString()
+
+          //imageFileName = Firebase.storage.reference.toString()
+          Log.d("###", "${downloadUrl}")
+         // val storageReference = FirebaseStorage.getInstance().reference.child("images/${imageFileName}.jpg")
+         // Glide.with(this).load(storageReference.path).into(I)
+           //    val localFile = File.createTempFile("tempImage","jpg")
+          //storageReference.getFile(localFile).addOnSuccessListener {
+
+            //  bitmapImage = BitmapFactory.decodeFile(localFile.absolutePath)
+
+
+              //storageReference.getFile(localFile).addOnSuccessListener {
+          // }
+
+
+      }*/
+    private fun selectImage() {
+
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+
+        startActivityForResult(intent, 100)
+
+
+         }
+
+    private fun  uploadImgae(){
+
+
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Uploading File...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+
+            val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+            val now = Date()
+            val fileName = formatter.format(now)
+            imageFileName = fileName.toString()
+         destinationPath = "images/${imageFileName}"
+        Log.d("###","${imageFileName}")
+
+
+            val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
+
+            storageReference.putFile(imageUri).addOnSuccessListener {
+
+                takeInPick.setImageURI(null)
+                Toast.makeText(this@TestScrollDownAdd, "Successfuly upladed", Toast.LENGTH_SHORT)
+                    .show()
+                if (progressDialog.isShowing) progressDialog.dismiss()
+
+            }.addOnFailureListener {
+
+                if (progressDialog.isShowing) progressDialog.dismiss()
+                Toast.makeText(this@TestScrollDownAdd, "failed", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+
+            imageUri = data?.data!!
+            takeInPick = findViewById<ImageView>(R.id.iv_uploadIamge)
+            takeInPick.setImageURI(imageUri)
+
+
+        }
 
 
     }
 
+    //location
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

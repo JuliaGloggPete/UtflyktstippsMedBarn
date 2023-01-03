@@ -26,6 +26,12 @@ lateinit var destinationImage : ImageView
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_more_info)
 
+       // val inputText = outlinedTextField.editText?.text.toString()
+
+      //  outlinedTextField.editText?.doOnTextChanged { inputText, _, _, _ ->
+            // Respond to input text change
+        //}
+
         val id = intent.getStringExtra("id")
 
 
@@ -37,7 +43,6 @@ lateinit var destinationImage : ImageView
         homepageView = findViewById(R.id.tv_webside_moreInfo)
         destinationImage = findViewById(R.id.iv_MoreInfo)
 
-        attributesView = findViewById(R.id.tv_attributes_moreInfe)
        val backButton = findViewById<Button>(R.id.btn_back)
         backButton.setOnClickListener{
             finish()
@@ -51,10 +56,24 @@ lateinit var destinationImage : ImageView
             {
                 titleView.text =destination.title
                 descriptionView.text =destination.description
-                priceView.text = "Pris: "+destination.price
+
+                if (destination.price!!.isNotEmpty())
+                { priceView.text = "Pris: "+destination.price} else{
+                    priceView.text = ""
+                }
+
+                if (destination.adressStreetName!!.isNotEmpty()
+                    &&destination.PostalCodeNVillage!!.isNotEmpty())
+                {adressView.text= "Adress: "+destination.adressStreetName+", "+destination.PostalCodeNVillage}
+                else {adressView.text = ""}
+
                 durationView.text = "Uttflktslängt: "+destination.duration
-                adressView.text= "Adress: "+destination.adressStreetName+" "+destination.PostalCodeNVillage
-                homepageView.text = "Hemsida: "+destination.homepage
+
+
+                if (destination.homepage!!.isNotEmpty())
+                {homepageView.text = "Hemsida: "+destination.homepage}
+
+
 
                 if(destination.destinationImagePath.isNotEmpty()) {
                     val imageRef = Firebase.storage.reference.child(destination.destinationImagePath)

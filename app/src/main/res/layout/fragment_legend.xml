@@ -13,8 +13,8 @@
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#23388E3C"
-        android:backgroundTint="#23388E3C"
+        android:background="#5E388E3C"
+        android:backgroundTint="#F8388E3C"
         android:paddingEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

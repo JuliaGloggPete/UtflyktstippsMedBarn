@@ -4,7 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#23388E3C"
+
+    android:background="#5E388E3C"
+    android:backgroundTint="#51388E3C"
+
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="5dp"
+
     android:isScrollContainer="false"
     android:scrollbars="horizontal"
     app:layout_scrollFlags="scroll"
@@ -79,14 +87,6 @@
 
             <TextView
                 android:id="@+id/tv_price_MoreInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/tv_attributes_moreInfe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"

@@ -47,7 +47,11 @@ class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        createMarkers()
+        val adapter = PlacesInfoAdapter(this)
+        mMap.setInfoWindowAdapter(adapter)
+        createPlaces()
+
+        //createMarkers()
 
 
 
@@ -94,4 +98,34 @@ class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+  fun  createPlaces() {
+
+      val boundBuilder = LatLngBounds.builder()
+      for (destination in destinations) {
+
+
+          if (destination.latitude != null && destination.longitude != null) {
+
+
+              var latitude = destination.latitude
+              var longitude = destination.longitude
+
+              var destinatinon1 = LatLng(latitude!!, longitude!!)
+              boundBuilder.include(destinatinon1)
+              val marker = mMap.addMarker(
+                  MarkerOptions().position(destinatinon1)
+              )
+              marker?.tag = destination
+
+
+          }
+
+
+      }
+
+
+  }
+
 }
+
+

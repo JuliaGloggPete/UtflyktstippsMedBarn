@@ -1,5 +1,6 @@
 package com.example.norraskanefamiljeutflyktsapp
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -26,7 +28,7 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var streetEditText: EditText
     lateinit var postalCodeNCityEditText: EditText
     lateinit var descriptionEditText: EditText
-    lateinit var downloadUrl: String
+
 
     lateinit var ageRecommendaiton: String
     lateinit var checkBoxOnPlace: CheckBox
@@ -44,6 +46,8 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var openHoursEditText: EditText
     lateinit var homepageEditText: EditText
     lateinit var takeInPick : ImageView
+    lateinit var imageUploadBtn : Button
+    //val toImageUploadButton = findViewById<Button>(R.id.btn_goToUploadActivity)
 
     lateinit var locationPovider: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
@@ -84,19 +88,20 @@ class TestScrollDownAdd : AppCompatActivity() {
 
         val addButton = findViewById<Button>(R.id.btn_add)
         val cancelButton = findViewById<Button>(R.id.btn_cancel)
-        val toImageUploadButton = findViewById<Button>(R.id.btn_goToUploadActivity)
-        val kontrollButton = findViewById<Button>(R.id.kontrollbutton)
 
-        toImageUploadButton.setOnClickListener {
-            //val intent = Intent(this, TakeInImageActivity::class.java)
+        imageUploadBtn = findViewById<Button>(R.id.btn_goToUploadActivity)
 
-           // startActivity(intent)
+        destinationPath = ""
+
+        imageUploadBtn.setOnClickListener {
+
             selectImage()
 
-            //uploadImgae()
 
         }
-        kontrollButton.setOnClickListener { uploadImgae() }
+
+        takeInPick = findViewById<ImageView>(R.id.iv_uploadIamge)
+
 
 
         locationPovider = LocationServices.getFusedLocationProviderClient(this)
@@ -104,8 +109,10 @@ class TestScrollDownAdd : AppCompatActivity() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationsResult: LocationResult) {
                 for (location in locationsResult.locations) {
-                    //Log.d("PPP", "lat: ${location.latitude}," +
-                    //      " lng ${location.longitude}")
+                    Log.d(
+                        "PPP", "lat: ${location.latitude}," +
+                                " lng ${location.longitude}"
+                    )
                     latitude = location.latitude
                     longitude = location.longitude
                 }
@@ -125,6 +132,23 @@ class TestScrollDownAdd : AppCompatActivity() {
                 REQUEST_LOCATION
             )
         }
+
+
+        checkBoxOnPlace.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermissions(
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        REQUEST_LOCATION
+                    )
+                }
+            }
+        }
+
 
 
 
@@ -208,6 +232,8 @@ class TestScrollDownAdd : AppCompatActivity() {
         var accesDisability = false
 
         if (checkBoxOnPlace.isChecked) {
+
+
             latitude
             longitude
 
@@ -299,6 +325,23 @@ class TestScrollDownAdd : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+
+
+    }
+
+    fun stopLocationUpdates(){
+        locationPovider.removeLocationUpdates(locationCallback)
+    }
+
+
     fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -315,36 +358,13 @@ class TestScrollDownAdd : AppCompatActivity() {
         }
     }
 
-    /*  override fun onResume() {
-          super.onResume()
-          imageFileName = intent.getStringExtra("imageName").toString()
 
-
-          downloadUrl = intent.getStringExtra("downloadUrl").toString()
-
-          //imageFileName = Firebase.storage.reference.toString()
-          Log.d("###", "${downloadUrl}")
-         // val storageReference = FirebaseStorage.getInstance().reference.child("images/${imageFileName}.jpg")
-         // Glide.with(this).load(storageReference.path).into(I)
-           //    val localFile = File.createTempFile("tempImage","jpg")
-          //storageReference.getFile(localFile).addOnSuccessListener {
-
-            //  bitmapImage = BitmapFactory.decodeFile(localFile.absolutePath)
-
-
-              //storageReference.getFile(localFile).addOnSuccessListener {
-          // }
-
-
-      }*/
     private fun selectImage() {
 
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-
         startActivityForResult(intent, 100)
-
 
          }
 
@@ -363,12 +383,13 @@ class TestScrollDownAdd : AppCompatActivity() {
          destinationPath = "images/${imageFileName}"
         Log.d("###","${imageFileName}")
 
-
             val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
 
             storageReference.putFile(imageUri).addOnSuccessListener {
 
-                takeInPick.setImageURI(null)
+
+                imageUploadBtn.visibility = View.GONE
+                takeInPick.setImageURI(imageUri)
                 Toast.makeText(this@TestScrollDownAdd, "Successfuly upladed", Toast.LENGTH_SHORT)
                     .show()
                 if (progressDialog.isShowing) progressDialog.dismiss()
@@ -389,8 +410,9 @@ class TestScrollDownAdd : AppCompatActivity() {
         if (requestCode == 100 && resultCode == RESULT_OK) {
 
             imageUri = data?.data!!
-            takeInPick = findViewById<ImageView>(R.id.iv_uploadIamge)
+
             takeInPick.setImageURI(imageUri)
+            uploadImgae()
 
 
         }

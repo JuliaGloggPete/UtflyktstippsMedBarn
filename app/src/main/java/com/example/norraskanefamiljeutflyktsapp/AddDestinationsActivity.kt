@@ -1,6 +1,7 @@
 package com.example.norraskanefamiljeutflyktsapp
 
 import android.Manifest
+import android.Manifest.permission
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,18 +22,22 @@ import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TestScrollDownAdd : AppCompatActivity() {
+class AddDestinationsActivity : AppCompatActivity() {
 
     lateinit var db: FirebaseFirestore
+
     lateinit var titleEditText: EditText
     lateinit var streetEditText: EditText
     lateinit var postalCodeNCityEditText: EditText
     lateinit var descriptionEditText: EditText
+    lateinit var priceEditText: EditText
+    lateinit var openHoursEditText: EditText
+    lateinit var homepageEditText: EditText
 
-
+    lateinit var durationOfActivity: String
     lateinit var ageRecommendaiton: String
-    lateinit var checkBoxOnPlace: CheckBox
 
+    lateinit var checkBoxOnPlace: CheckBox
     lateinit var checkBoxRestaurant: CheckBox
     lateinit var checkBoxPlayground: CheckBox
     lateinit var checkBoxBBQPlace: CheckBox
@@ -41,23 +46,22 @@ class TestScrollDownAdd : AppCompatActivity() {
     lateinit var checkBoxShop: CheckBox
     lateinit var checkBoxStrolerAccess: CheckBox
     lateinit var checkBoxHandicapAccess: CheckBox
-    lateinit var durationOfActivity: String
-    lateinit var priceEditText: EditText
-    lateinit var openHoursEditText: EditText
-    lateinit var homepageEditText: EditText
-    lateinit var takeInPick : ImageView
-    lateinit var imageUploadBtn : Button
-    //val toImageUploadButton = findViewById<Button>(R.id.btn_goToUploadActivity)
 
-    lateinit var locationPovider: FusedLocationProviderClient
+
+    lateinit var takeInPick: ImageView
+    lateinit var imageUploadBtn: Button
+
+
+    lateinit var locationProvider: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
     private val REQUEST_LOCATION = 1
 
+
     var longitude: Double? = null
     var latitude: Double? = null
 
-    lateinit var destinationPath :String
+    lateinit var destinationPath: String
 
     lateinit var imageUri: Uri
     lateinit var imageFileName: String
@@ -65,7 +69,7 @@ class TestScrollDownAdd : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test_scroll_down_add)
+        setContentView(R.layout.activity_add)
 
         db = Firebase.firestore
 
@@ -85,34 +89,30 @@ class TestScrollDownAdd : AppCompatActivity() {
         checkBoxHandicapAccess = findViewById<CheckBox>(R.id.checkB_handicapAcces)
         priceEditText = findViewById(R.id.et_price)
         openHoursEditText = findViewById(R.id.et_OpenHours)
+        destinationPath = "" //init to avoid crash
 
         val addButton = findViewById<Button>(R.id.btn_add)
+        addButton.setOnClickListener {
+            saveDestination()
+        }
+
         val cancelButton = findViewById<Button>(R.id.btn_cancel)
+        cancelButton.setOnClickListener { finish() }
 
         imageUploadBtn = findViewById<Button>(R.id.btn_goToUploadActivity)
 
-        destinationPath = ""
-
         imageUploadBtn.setOnClickListener {
-
             selectImage()
-
-
         }
 
         takeInPick = findViewById<ImageView>(R.id.iv_uploadIamge)
 
-
-
-        locationPovider = LocationServices.getFusedLocationProviderClient(this)
+        locationProvider = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = LocationRequest.Builder(2000).build()
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationsResult: LocationResult) {
                 for (location in locationsResult.locations) {
-                    Log.d(
-                        "PPP", "lat: ${location.latitude}," +
-                                " lng ${location.longitude}"
-                    )
+
                     latitude = location.latitude
                     longitude = location.longitude
                 }
@@ -122,13 +122,13 @@ class TestScrollDownAdd : AppCompatActivity() {
         }
         if (ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                permission.ACCESS_FINE_LOCATION
             )
             != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION
             )
         }
@@ -138,25 +138,21 @@ class TestScrollDownAdd : AppCompatActivity() {
             if (isChecked) {
                 if (ContextCompat.checkSelfPermission(
                         this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION
+                        Manifest.permission.ACCESS_FINE_LOCATION
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
                     requestPermissions(
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        arrayOf(permission.ACCESS_FINE_LOCATION),
                         REQUEST_LOCATION
                     )
+
+                } else {
+                    locationProvider.requestLocationUpdates(locationRequest, locationCallback, null)
                 }
+            } else {
+                locationProvider.removeLocationUpdates(locationCallback)
             }
         }
-
-
-
-
-
-        addButton.setOnClickListener {
-            saveDestination()
-        }
-        cancelButton.setOnClickListener { finish() }
 
         val duration = arrayOf(
             "ej angiven",
@@ -164,13 +160,13 @@ class TestScrollDownAdd : AppCompatActivity() {
             "heldagsutflykt", "heldagsutflykt med övernattningsmöjlighet"
         )
 
-        val durationsoinner = findViewById<Spinner>(R.id.spinner_duration)
+        val durationSpinner = findViewById<Spinner>(R.id.spinner_duration)
 
         val durationArrayAdapter = ArrayAdapter<String>(
             this, android.R.layout.simple_spinner_item, duration
         )
-        durationsoinner.adapter = durationArrayAdapter
-        durationsoinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        durationSpinner.adapter = durationArrayAdapter
+        durationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -178,7 +174,7 @@ class TestScrollDownAdd : AppCompatActivity() {
                 id: Long
             ) {
                 durationOfActivity = duration[position]
-                //Toast.makeText(applicationContext,"selected duration"+ duration[position],Toast.LENGTH_SHORT).show()
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -224,16 +220,11 @@ class TestScrollDownAdd : AppCompatActivity() {
         var adressStreetName = streetEditText.text.toString()
         var postalCodeNVillage = postalCodeNCityEditText.text.toString()
         var homepage = homepageEditText.text.toString()
-
         var description = descriptionEditText.text.toString()
-
-
         var restaurant = false
         var accesDisability = false
 
         if (checkBoxOnPlace.isChecked) {
-
-
             latitude
             longitude
 
@@ -285,9 +276,6 @@ class TestScrollDownAdd : AppCompatActivity() {
             indoor = true
         }
 
-        var extraPlaceholder = false
-
-
         var duration = durationOfActivity
         var ageFrom = ageRecommendaiton
 
@@ -304,9 +292,9 @@ class TestScrollDownAdd : AppCompatActivity() {
             restaurant, playgroundNearby,
             bbqplace, animalstosee, shop,
             accesDisability, accesStroller, indoor, false,
-            duration, ageFrom, price, openinghours, destinationImage,destinationPath
+            duration, ageFrom, price, openinghours, destinationImage, destinationPath
         )
-        //DataManager.destinations.add(destination)
+
 
         if (title.isEmpty() || description.isEmpty()) {
             Toast.makeText(
@@ -328,28 +316,27 @@ class TestScrollDownAdd : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         startLocationUpdates()
+
     }
 
     override fun onPause() {
         super.onPause()
         stopLocationUpdates()
-
-
     }
 
-    fun stopLocationUpdates(){
-        locationPovider.removeLocationUpdates(locationCallback)
+    fun stopLocationUpdates() {
+        locationProvider.removeLocationUpdates(locationCallback)
     }
 
 
     fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                permission.ACCESS_FINE_LOCATION
             ) ==
             PackageManager.PERMISSION_GRANTED
         ) {
-            locationPovider.requestLocationUpdates(
+            locationProvider.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
                 Looper.getMainLooper()
@@ -366,42 +353,42 @@ class TestScrollDownAdd : AppCompatActivity() {
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(intent, 100)
 
-         }
-
-    private fun  uploadImgae(){
+    }
 
 
-            val progressDialog = ProgressDialog(this)
-            progressDialog.setMessage("Uploading File...")
-            progressDialog.setCancelable(false)
-            progressDialog.show()
-
-            val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
-            val now = Date()
-            val fileName = formatter.format(now)
-            imageFileName = fileName.toString()
-         destinationPath = "images/${imageFileName}"
-        Log.d("###","${imageFileName}")
-
-            val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
-
-            storageReference.putFile(imageUri).addOnSuccessListener {
+    private fun uploadImgae() {
 
 
-                imageUploadBtn.visibility = View.GONE
-                takeInPick.setImageURI(imageUri)
-                Toast.makeText(this@TestScrollDownAdd, "Successfuly upladed", Toast.LENGTH_SHORT)
-                    .show()
-                if (progressDialog.isShowing) progressDialog.dismiss()
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Uploading File...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
 
-            }.addOnFailureListener {
+        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+        val now = Date()
+        val fileName = formatter.format(now)
+        imageFileName = fileName.toString()
+        destinationPath = "images/${imageFileName}"
+        Log.d("###", "${imageFileName}")
 
-                if (progressDialog.isShowing) progressDialog.dismiss()
-                Toast.makeText(this@TestScrollDownAdd, "failed", Toast.LENGTH_SHORT).show()
+        val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
 
-            }
+        storageReference.putFile(imageUri).addOnSuccessListener {
+
+
+            imageUploadBtn.visibility = View.GONE
+            takeInPick.setImageURI(imageUri)
+            Toast.makeText(this@AddDestinationsActivity, "Successfuly upladed", Toast.LENGTH_SHORT)
+                .show()
+            if (progressDialog.isShowing) progressDialog.dismiss()
+
+        }.addOnFailureListener {
+
+            if (progressDialog.isShowing) progressDialog.dismiss()
+            Toast.makeText(this@AddDestinationsActivity, "failed", Toast.LENGTH_SHORT).show()
+
         }
-
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -414,11 +401,11 @@ class TestScrollDownAdd : AppCompatActivity() {
             takeInPick.setImageURI(imageUri)
             uploadImgae()
 
-
         }
 
 
     }
+
 
     //location
     override fun onRequestPermissionsResult(

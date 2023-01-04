@@ -36,7 +36,7 @@ class Log_In_please : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-      val view : View =inflater!!.inflate(R.layout.fragment_log__in_please, container, false)
+        val view: View = inflater!!.inflate(R.layout.fragment_log__in_please, container, false)
 
         view.btn_back_to_logIn.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
@@ -47,8 +47,6 @@ class Log_In_please : Fragment() {
 
         view.btn_fragm_cancel.setOnClickListener {
             val loggedIn = false
-
-
 
 
             /*val transaction = supportFragmentManager.beginTransaction()

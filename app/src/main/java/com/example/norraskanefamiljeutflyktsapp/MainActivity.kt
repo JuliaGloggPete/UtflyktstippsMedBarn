@@ -14,12 +14,11 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
-// https://www.youtube.com/watch?v=0ok8e0JfIoo&t=35s
+
     lateinit var auth: FirebaseAuth
     lateinit var emailView: EditText
     lateinit var passwordView: EditText
-    lateinit var skipBtn : Button
-
+    lateinit var skipBtn: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val signInBtn = findViewById<Button>(R.id.btn_signIn)
         val signUpBtn = findViewById<Button>(R.id.btn_signUp)
 
-         skipBtn = findViewById<Button>(R.id.btn_moveOnWithoutRegister)
+        skipBtn = findViewById<Button>(R.id.btn_moveOnWithoutRegister)
 
 
         signUpBtn.setOnClickListener {
@@ -95,14 +94,13 @@ class MainActivity : AppCompatActivity() {
         var loggedIn = true
 
 
-        if ( skipBtn.isPressed ){
+        if (skipBtn.isPressed) {
             loggedIn = false
 
         }
 
 
-
-      val intent = Intent(this, DestinationsViewActivity::class.java)
+        val intent = Intent(this, DestinationsViewActivity::class.java)
         //val intent = Intent(this, TakeInImageActivity::class.java)
 
         intent.putExtra("logged", loggedIn)
@@ -137,7 +135,6 @@ class MainActivity : AppCompatActivity() {
                 gotoPlacesActivitiy()
 
 
-
             } else {
                 val toast =
                     Toast.makeText(
@@ -153,6 +150,16 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+       val logout = intent.getBooleanExtra("Logout", false)
+
+        if(logout == false){
+            auth.signOut()
+        }
 
     }
 

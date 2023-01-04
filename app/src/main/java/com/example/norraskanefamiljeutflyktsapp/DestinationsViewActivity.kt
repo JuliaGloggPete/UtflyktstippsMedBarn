@@ -23,24 +23,43 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = DestinatinRecyclerAdapter(this, DataManager.destinations, this)
 
+        val loggedIn = intent.getBooleanExtra("logged", true)
 
 
 
-        val addDestinationButton = findViewById<FloatingActionButton>(R.id.floatingActionButton2)
+
+        val addDestinationButton = findViewById<FloatingActionButton>(R.id.FABtoAdd)
         addDestinationButton.setOnClickListener {
-            val loggedIn = intent.getBooleanExtra("logged", true)
+
 
             if (loggedIn == true) {
 
-                val intent = Intent(this, TestScrollDownAdd::class.java)
+                val intent = Intent(this, AddDestinationsActivity::class.java)
                 startActivity(intent)
             } else {
-               // Toast.makeText(this, "log in", Toast.LENGTH_SHORT).show()
                 addNRemovePleaseLogInFragment()
             }
         }
-        val mapBtn = findViewById<Button>(R.id.btn_seeMap)
-        mapBtn.setOnClickListener {
+        val logOutButton = findViewById<Button>(R.id.btn_LogOut)
+        if (loggedIn == false) {
+            logOutButton.setText("Logga In")
+        }
+
+
+
+        logOutButton.setOnClickListener {
+            if (loggedIn == false) {
+                finish()
+            }
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("Logout",true)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent) }
+
+        val mapButton = findViewById<FloatingActionButton>(R.id.floatingActionButtonMaps)
+
+        mapButton.setOnClickListener {
 
             val intent = Intent(this, AllDestinationsMapsActivity::class.java)
             startActivity(intent)
@@ -54,8 +73,6 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
     }
 
     override fun OnClick(position: Int) {
-        // Toast.makeText(this, "${position}",Toast.LENGTH_SHORT).show()
-        //   Toast.makeText(this,DataManager.destinations[position].title,Toast.LENGTH_SHORT).show()
         val intent = Intent(this, MoreInfoActivity::class.java)
 
         intent.putExtra("id", DataManager.destinations[position].documentId.toString())
@@ -67,13 +84,11 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
     fun addNRemoveLegendFragment(view: View) {
 
         val frag = supportFragmentManager.findFragmentByTag("legendFragment")
-        if (frag != null){
+        if (frag != null) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.remove(legendFragment)
-            transaction.commit()}
-
-
-       else {
+            transaction.commit()
+        } else {
 
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.framelayout, legendFragment, "legendFragment")
@@ -84,7 +99,7 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
-        if(event?.action == MotionEvent.ACTION_UP){
+        if (event?.action == MotionEvent.ACTION_UP) {
             removeLegend()
             removeLoginFragment()
         }
@@ -109,13 +124,11 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
     fun addNRemovePleaseLogInFragment() {
 
         val frag = supportFragmentManager.findFragmentByTag("logInFragment")
-        if (frag != null){
+        if (frag != null) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.remove(plsLogInFragment)
-            transaction.commit()}
-
-
-        else {
+            transaction.commit()
+        } else {
 
 
             val transaction = supportFragmentManager.beginTransaction()
@@ -124,12 +137,6 @@ class DestinationsViewActivity : AppCompatActivity(), DestinatinRecyclerAdapter.
 
         }
     }
-
-
-
-
-
-
 
 
     fun removeLoginFragment() {

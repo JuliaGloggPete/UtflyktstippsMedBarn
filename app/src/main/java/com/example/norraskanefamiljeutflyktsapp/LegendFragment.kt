@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_destinations_view.*
 
-class LegendFragment() : Fragment()
-{
+class LegendFragment() : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,9 +17,6 @@ class LegendFragment() : Fragment()
         val view = inflater.inflate(R.layout.fragment_legend, framelayout, false)
 
         return view
-
-
-
 
 
     }

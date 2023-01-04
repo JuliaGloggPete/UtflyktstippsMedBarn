@@ -5,5 +5,4 @@ object DataManager {
 
     val destinations = mutableListOf<Places>()
 
-
 }

@@ -11,99 +11,102 @@ import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
-class DestinatinRecyclerAdapter (val context: Context,
-                                 val destinations : List<Places>,
-val listener: OnClickListener) : RecyclerView.Adapter<DestinatinRecyclerAdapter.ViewHolder>(){
+class DestinatinRecyclerAdapter(
+    val context: Context,
+    val destinations: List<Places>,
+    val listener: OnClickListener
+) : RecyclerView.Adapter<DestinatinRecyclerAdapter.ViewHolder>() {
 
- val layoutInflater = LayoutInflater.from(context)
+    val layoutInflater = LayoutInflater.from(context)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        val destinationView = layoutInflater.inflate(R.layout.list_item_destination,parent,false)
+        val destinationView = layoutInflater.inflate(R.layout.list_item_destination, parent, false)
 
         return ViewHolder(destinationView)
 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-   val destination = destinations[position]
+        val destination = destinations[position]
         holder.titleTextView.text = destination.title
         holder.descriptionTextView.text = destination.description
-        if(destination.destinationImagePath.isNotEmpty()) {
+        if (destination.destinationImagePath.isNotEmpty()) {
             val imageRef = Firebase.storage.reference.child(destination.destinationImagePath)
             imageRef.downloadUrl.addOnSuccessListener { Uri ->
                 val imageUrl = Uri.toString()
+
 
                 Glide.with(context)
                     .load(imageUrl)
                     .into(holder.destinationImage)
             }
 
-                        }           else
-        {destination.destinationImage?.let { holder.destinationImage.setImageResource(it) }}
+        } else {
+            destination.destinationImage?.let { holder.destinationImage.setImageResource(it) }
+        }
 
-
-
-
-
-        holder.ageRecomendatin.text =destination.ageFrom
-        if (destination.restaurant == true){
+        holder.ageRecomendatin.text = destination.ageFrom
+        if (destination.restaurant == true) {
             holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_24)
         }
 
- if (destination.restaurant == true){
+        if (destination.restaurant == true) {
             holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_24)
-        } else {holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_grey)}
+        } else {
+            holder.restaurantImage.setImageResource(R.drawable.ic_baseline_restaurant_menu_grey)
+        }
 
- if (destination.accesStroller == true){
+        if (destination.accesStroller == true) {
             holder.strolerImage.setImageResource(R.drawable.ic_baseline_child_friendly_24)
-        }else {holder.strolerImage.setImageResource(R.drawable.ic_baseline_child_friendly_grey)}
+        } else {
+            holder.strolerImage.setImageResource(R.drawable.ic_baseline_child_friendly_grey)
+        }
 
- if (destination.accesDisability == true){
+        if (destination.accesDisability == true) {
             holder.wheelChairImage.setImageResource(R.drawable.ic_baseline_accessible_24)
-        } else{
-     holder.wheelChairImage.setImageResource(R.drawable.ic_baseline_accessible_grey)
- }
+        } else {
+            holder.wheelChairImage.setImageResource(R.drawable.ic_baseline_accessible_grey)
+        }
 
- if (destination.bbqplace == true){
+        if (destination.bbqplace == true) {
             holder.BBQImage.setImageResource(R.drawable.ic_baseline_outdoor_grill_24)
         } else {
-     holder.BBQImage.setImageResource(R.drawable.ic_baseline_outdoor_grill_grey)
- }
+            holder.BBQImage.setImageResource(R.drawable.ic_baseline_outdoor_grill_grey)
+        }
 
-        if (destination.playgroundNearby == true){
+        if (destination.playgroundNearby == true) {
             holder.playgroundImage.setImageResource(R.drawable.ic_baseline_toys_24)
-        }else {
+        } else {
             holder.playgroundImage.setImageResource(R.drawable.ic_baseline_toys_grey)
         }
 
- if (destination.animalstosee == true){
+        if (destination.animalstosee == true) {
             holder.animalsImage.setImageResource(R.drawable.ic_baseline_pets_24)
-        }else{
-     holder.animalsImage.setImageResource(R.drawable.ic_baseline_pets_grey)
-    }
+        } else {
+            holder.animalsImage.setImageResource(R.drawable.ic_baseline_pets_grey)
+        }
 
- if (destination.shop == true){
+        if (destination.shop == true) {
             holder.shopImage.setImageResource(R.drawable.ic_baseline_shopping_cart_24)
         } else {
-     holder.shopImage.setImageResource(R.drawable.ic_baseline_shopping_cart_grey)
- }
+            holder.shopImage.setImageResource(R.drawable.ic_baseline_shopping_cart_grey)
+        }
 
-if (destination.indoorActivity== true){
+        if (destination.indoorActivity == true) {
             holder.indoorImage.setImageResource(R.drawable.ic_baseline_home_24)
         } else {
-    holder.indoorImage.setImageResource(R.drawable.ic_baseline_home_grey)
-}
-
+            holder.indoorImage.setImageResource(R.drawable.ic_baseline_home_grey)
+        }
 
     }
 
 
 
-    override fun getItemCount()= destinations.size
+    override fun getItemCount() = destinations.size
 
-    inner class ViewHolder(destinationView: View) : RecyclerView.ViewHolder(destinationView){
+    inner class ViewHolder(destinationView: View) : RecyclerView.ViewHolder(destinationView) {
 
         val titleTextView = destinationView.findViewById<TextView>(R.id.tv_titleRecyclerview)
         val descriptionTextView = destinationView.findViewById<TextView>(R.id.tv_ShortTextdescr)
@@ -120,26 +123,22 @@ if (destination.indoorActivity== true){
 
 
         init {
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 val postion = adapterPosition
                 listener.OnClick(postion)
-
 
             }
 
         }
 
 
-
     }
 
-    interface OnClickListener{
+    interface OnClickListener {
         fun OnClick(position: Int)
-       // https://www.youtube.com/watch?v=nvmqVN7kJ_Q
+
 
     }
-
-
 
 
 }

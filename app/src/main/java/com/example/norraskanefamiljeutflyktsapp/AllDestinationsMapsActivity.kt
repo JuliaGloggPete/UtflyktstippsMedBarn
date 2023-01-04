@@ -51,80 +51,43 @@ class AllDestinationsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.setInfoWindowAdapter(adapter)
         createPlaces()
 
-        //createMarkers()
-
-
-
 
         // Add a marker in Sydney and move the camera
-      /*  val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
+        /*  val sydney = LatLng(-34.0, 151.0)
+          mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+          mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
     }
 
-    fun createMarkers(){
+
+    fun createPlaces() {
 
         val boundBuilder = LatLngBounds.builder()
-
-        for (destination in destinations)          {
-
-
-            if (destination.latitude != null && destination.longitude != null){
+        for (destination in destinations) {
 
 
-        var latitude = destination.latitude
-        var  longitude = destination.longitude
-
-        var destinatinon1 = LatLng(latitude!!,longitude!!)
-        boundBuilder.include(destinatinon1)
-        var marker = mMap.addMarker(
-            MarkerOptions()
-                .position(destinatinon1)
-                .title(destination.title)
-                .snippet(destination.adressStreetName))
+            if (destination.latitude != null && destination.longitude != null) {
 
 
-        }}
+                var latitude = destination.latitude
+                var longitude = destination.longitude
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundBuilder.build(),1000,1000,0))
+                var destinatinon1 = LatLng(latitude!!, longitude!!)
+                boundBuilder.include(destinatinon1)
+                val marker = mMap.addMarker(
+                    MarkerOptions().position(destinatinon1)
+                )
+                marker?.tag = destination
 
 
+            }
 
 
-        //for ( destination in DataManager.destinations){
-        //var destination = LatLng(destinations.latitude,destionations.longitude)}
+        }
 
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundBuilder.build(), 1000, 1000, 0))
 
 
     }
-
-  fun  createPlaces() {
-
-      val boundBuilder = LatLngBounds.builder()
-      for (destination in destinations) {
-
-
-          if (destination.latitude != null && destination.longitude != null) {
-
-
-              var latitude = destination.latitude
-              var longitude = destination.longitude
-
-              var destinatinon1 = LatLng(latitude!!, longitude!!)
-              boundBuilder.include(destinatinon1)
-              val marker = mMap.addMarker(
-                  MarkerOptions().position(destinatinon1)
-              )
-              marker?.tag = destination
-
-
-          }
-
-
-      }
-
-
-  }
 
 }
 

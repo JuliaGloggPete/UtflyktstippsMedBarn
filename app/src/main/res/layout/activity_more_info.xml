@@ -72,18 +72,20 @@
                 android:id="@+id/tv_description_moreInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                android:text="TextView" />
+                android:layout_marginTop="0dp"
+                android:lineSpacingExtra="8sp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="32dp"
+                 />
 
             <TextView
                 android:id="@+id/tv_duration_MoreInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:text="TextView" />
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="16dp"
+                android:lineSpacingExtra="8sp" />
 
             <TextView
                 android:id="@+id/tv_price_MoreInfo"
@@ -91,23 +93,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
-                android:text="TextView" />
+                android:layout_marginEnd="16dp"
+                android:lineSpacingExtra="8sp" />
 
             <TextView
                 android:id="@+id/tv_Adress_moreInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:text="TextView" />
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="0dp"
+                android:lineSpacingExtra="8sp" />
 
             <TextView
                 android:id="@+id/tv_webside_moreInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="0dp"
+                android:lineSpacingExtra="8sp" />
+
+            <TextView
+                android:id="@+id/tv_MoreInfo_Attributes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
-                android:text="TextView" />
+                android:layout_marginEnd="16dp"
+                android:elegantTextHeight="false"
+                android:lineSpacingExtra="8sp" />
 
         </LinearLayout>
     </ScrollView>

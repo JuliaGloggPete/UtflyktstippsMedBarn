@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_alignWithParentIfMissing="false"
     android:layout_marginStart="55dp"
-    android:background="#B0CAB1"
+    android:background="#F8B0CAB1"
     android:backgroundTint="#F896CC99"
     app:flow_horizontalAlign="center"
     app:flow_verticalAlign="center"
